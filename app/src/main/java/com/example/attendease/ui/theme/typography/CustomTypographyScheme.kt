@@ -19,6 +19,7 @@ data class CustomTypographyScheme(
     val p_large : TextStyle,
     val p_largeBold : TextStyle,
     val p_medium : TextStyle,
+    val p_mediumSemiBold: TextStyle,
     val p_mediumBold : TextStyle,
     val p_small : TextStyle,
     val p_smallBold : TextStyle,
@@ -67,6 +68,11 @@ val defaultCustomTypographyScheme = CustomTypographyScheme(
         fontFamily = interFontFamily,
         fontSize = 16.sp,
         fontWeight = FontWeight.Normal
+    ),
+    p_mediumSemiBold = TextStyle(
+        fontFamily = interFontFamily,
+        fontSize = 16.sp,
+        fontWeight = FontWeight.SemiBold
     ),
     p_mediumBold = TextStyle(
         fontFamily = interFontFamily,
