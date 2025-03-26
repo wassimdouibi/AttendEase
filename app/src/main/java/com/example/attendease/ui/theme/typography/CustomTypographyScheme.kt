@@ -9,7 +9,6 @@ import com.example.attendease.ui.theme.interFontFamily
 @Immutable
 data class CustomTypographyScheme(
     // ------- Heading --------
-    val heading0 : TextStyle,
     val heading1 : TextStyle,
     val heading2 : TextStyle,
     val heading3 : TextStyle,
@@ -23,18 +22,14 @@ data class CustomTypographyScheme(
     val p_mediumBold : TextStyle,
     val p_small : TextStyle,
     val p_smallBold : TextStyle,
-    val p_smallSemiBold : TextStyle
+    val p_smallSemiBold : TextStyle,
+    val p_tiny: TextStyle
 )
 
 val defaultCustomTypographyScheme = CustomTypographyScheme(
-    heading0 = TextStyle(
-        fontFamily = interFontFamily,
-        fontSize = 40.sp,
-        fontWeight = FontWeight.Bold
-    ),
     heading1 = TextStyle(
         fontFamily = interFontFamily,
-        fontSize = 36.sp,
+        fontSize = 32.sp,
         fontWeight = FontWeight.Bold
     ),
     heading2 = TextStyle(
@@ -92,5 +87,10 @@ val defaultCustomTypographyScheme = CustomTypographyScheme(
         fontFamily = interFontFamily,
         fontSize = 14.sp,
         fontWeight = FontWeight.SemiBold
+    ),
+    p_tiny = TextStyle(
+        fontFamily = interFontFamily,
+        fontSize = 12.sp,
+        fontWeight = FontWeight.Normal
     )
 )

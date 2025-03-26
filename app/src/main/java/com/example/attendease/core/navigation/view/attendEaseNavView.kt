@@ -63,7 +63,7 @@ fun AttendEaseNavView(
                 modifier = Modifier
                     .fillMaxWidth()
                     .statusBarsPadding()
-                    .padding(horizontal = 16.dp),
+                    .padding(bottom = 16.dp, start = 16.dp, end = 16.dp),
                 alignment = Alignment.CenterStart,
             )
         },
