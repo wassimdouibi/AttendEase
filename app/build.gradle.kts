@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.example.attendease"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.attendease"
@@ -53,4 +53,21 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    // Navigation
+    implementation ("androidx.navigation:navigation-compose:2.7.7")
+
+    //Retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    // Material 3 extended
+    implementation("androidx.compose.material:material-icons-extended:1.5.0")
+
+    // Communicating with the backend project
+    implementation("com.squareup.okhttp3:okhttp:4.11.0")
+    implementation("com.google.code.gson:gson:2.10.1")
+
+    // Storing Data in local
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
 }
