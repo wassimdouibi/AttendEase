@@ -15,7 +15,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.rememberNavController
+import com.example.attendease.core.Attendence.View.AttendanceScreen
+import com.example.attendease.core.Attendence.ViewModel.AttendanceViewModel
 import com.example.attendease.core.HelpSupport.viewModel.HelpSupportViewModel
+import com.example.attendease.core.attendies.view.AttendiesView
 import com.example.attendease.core.statistics.viewModel.StatisticsViewModel
 import com.example.attendease.router.NavigationHost
 
@@ -39,6 +42,12 @@ class MainActivity : ComponentActivity() {
         )
     }
 
+    private val attendanceViewModel: AttendanceViewModel by viewModels {
+        AttendanceViewModel.Factory(
+            (application as AttendEaseApplication).attendanceRepository
+        )
+    }
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,14 +62,15 @@ class MainActivity : ComponentActivity() {
                     val navController = rememberNavController()
                     val context = LocalContext.current
                     val pref = context.getSharedPreferences("local_AttendEase_data", Context.MODE_PRIVATE)
-
+                    //AttendanceScreen()
                     NavigationHost(
                         navController = navController,
                         pref = pref,
 
                         attendiesViewModel = attendiesViewModel,
                         statisticsViewModel = statisticsViewModel,
-                        helpSupportViewModel = helpSupportViewModel
+                        helpSupportViewModel = helpSupportViewModel,
+                        attendanceViewModel = attendanceViewModel
                     )
 
                 }
