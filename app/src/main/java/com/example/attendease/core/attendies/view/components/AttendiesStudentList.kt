@@ -10,8 +10,8 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import com.example.attendease.core.attendies.model.entity.ProgressStep
 import com.example.attendease.core.attendies.model.entity.Student
 import com.example.attendease.ui.theme.LocalCustomColorScheme
 import com.example.attendease.ui.theme.LocalCustomTypographyScheme
@@ -20,6 +20,7 @@ import com.example.attendease.ui.theme.LocalCustomTypographyScheme
 @Composable
 fun AttendiesStudentList(
     students: List<Student>,
+    onStateChange: (ProgressStep) -> Unit
 ){
     var searchQuery by remember { mutableStateOf("") }
     val checkedStates = remember { mutableStateListOf<Boolean>().apply { addAll(List(students.size) { false }) } }
@@ -71,7 +72,9 @@ fun AttendiesStudentList(
             item {
                 Spacer(modifier = Modifier.height(16.dp))
                 Button(
-                    onClick = {},
+                    onClick = {
+
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(52.dp),

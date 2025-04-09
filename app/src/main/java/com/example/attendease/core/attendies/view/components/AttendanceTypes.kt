@@ -13,7 +13,7 @@ import com.example.attendease.ui.theme.LocalCustomTypographyScheme
 @Composable
 fun AttendanceTypes(
     selectedType: AttendanceType,
-    onClick: () -> Unit,
+    onStateChange: (AttendanceType) -> Unit,
 ) {
     Column {
         Text(
@@ -32,7 +32,7 @@ fun AttendanceTypes(
                 {
                     RadioButton(
                         selected = selectedType == type,
-                        onClick = onClick,
+                        onClick = {onStateChange(AttendanceType.Absence)},
                         colors = RadioButtonDefaults.colors(
                             selectedColor = LocalCustomColorScheme.current.basePrimary,
                             unselectedColor = LocalCustomColorScheme.current.default300,

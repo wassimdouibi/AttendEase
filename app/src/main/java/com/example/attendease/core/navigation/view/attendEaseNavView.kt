@@ -9,8 +9,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
@@ -18,22 +16,19 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.attendease.core.HelpSupport.view.HelpSupportView
 import com.example.attendease.core.HelpSupport.viewModel.HelpSupportViewModel
-import com.example.attendease.core.attendies.view.AttendiesView
-import com.example.attendease.core.attendies.viewModel.AttendiesViewModel
 import com.example.attendease.core.navigation.model.NavItem
 import com.example.attendease.core.navigation.view.components.NavItemBox
 import com.example.attendease.core.statistics.view.StatisticsView
 import com.example.attendease.core.statistics.viewModel.StatisticsViewModel
 import com.example.attendease.router.Router
 import com.example.attendease.R
-import com.example.attendease.core.Attendence.View.AttendanceScreen
-import com.example.attendease.core.Attendence.ViewModel.AttendanceViewModel
+import com.example.attendease.core.attendies.view.AttendiesView
+import com.example.attendease.core.attendies.viewModel.AttendiesViewModel
 
 @Composable
 fun AttendEaseNavView(
     pref: SharedPreferences,
-
-    attendanceViewModel: AttendanceViewModel,
+    attendiesViewModel: AttendiesViewModel,
     statisticsViewModel: StatisticsViewModel,
     helpSupportViewModel: HelpSupportViewModel
 ){
@@ -79,12 +74,12 @@ fun AttendEaseNavView(
             ) {
                 NavHost(
                     navController = navController,
-                    startDestination = Router.AttendanceScreen.route
+                    startDestination = Router.AttendiesScreen.route
                 ){
-                    composable(route = Router.AttendanceScreen.route){
-                        AttendanceScreen(
+                    composable(route = Router.AttendiesScreen.route){
+                        AttendiesView(
                             navController = navController,
-                            attendanceViewModel = attendanceViewModel
+                            attendiesViewModel = attendiesViewModel
                         )
                     }
 

@@ -1,4 +1,4 @@
-package com.example.attendease.core.Attendence.View.Components
+package com.example.attendease.core.attendies.view.components
 
 
 

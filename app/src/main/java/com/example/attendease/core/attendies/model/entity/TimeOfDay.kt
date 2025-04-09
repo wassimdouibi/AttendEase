@@ -1,4 +1,4 @@
-package com.example.attendease.core.Attendence.model.entity
+package com.example.attendease.core.attendies.model.entity
 
 import java.time.LocalTime
 
