@@ -26,12 +26,14 @@ import com.example.attendease.core.statistics.view.StatisticsView
 import com.example.attendease.core.statistics.viewModel.StatisticsViewModel
 import com.example.attendease.router.Router
 import com.example.attendease.R
+import com.example.attendease.core.Attendence.View.AttendanceScreen
+import com.example.attendease.core.Attendence.ViewModel.AttendanceViewModel
 
 @Composable
 fun AttendEaseNavView(
     pref: SharedPreferences,
 
-    attendiesViewModel: AttendiesViewModel,
+    attendanceViewModel: AttendanceViewModel,
     statisticsViewModel: StatisticsViewModel,
     helpSupportViewModel: HelpSupportViewModel
 ){
@@ -77,12 +79,12 @@ fun AttendEaseNavView(
             ) {
                 NavHost(
                     navController = navController,
-                    startDestination = Router.AttendiesScreen.route
+                    startDestination = Router.AttendanceScreen.route
                 ){
-                    composable(route = Router.AttendiesScreen.route){
-                        AttendiesView(
+                    composable(route = Router.AttendanceScreen.route){
+                        AttendanceScreen(
                             navController = navController,
-                            attendiesViewModel = attendiesViewModel,
+                            attendanceViewModel = attendanceViewModel
                         )
                     }
 

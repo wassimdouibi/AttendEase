@@ -5,6 +5,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.attendease.core.Attendence.View.AttendanceScreen
+import com.example.attendease.core.Attendence.ViewModel.AttendanceViewModel
 import com.example.attendease.core.HelpSupport.view.HelpSupportView
 import com.example.attendease.core.HelpSupport.viewModel.HelpSupportViewModel
 import com.example.attendease.core.attendies.view.AttendiesView
@@ -20,16 +22,27 @@ fun NavigationHost(
 
     attendiesViewModel: AttendiesViewModel,
     statisticsViewModel: StatisticsViewModel,
-    helpSupportViewModel: HelpSupportViewModel
+    helpSupportViewModel: HelpSupportViewModel,
+
+    attendanceViewModel: AttendanceViewModel
+
 ){
     NavHost(
         navController = navController,
         startDestination = Router.AttendEaseNavScreen.route
     ) {
+
+        composable(route = Router.AttendanceScreen.route){
+            AttendanceScreen(
+                navController = navController,
+                attendanceViewModel = attendanceViewModel
+            )
+        }
+
         composable(Router.AttendEaseNavScreen.route){
             AttendEaseNavView(
                 pref = pref,
-                attendiesViewModel = attendiesViewModel,
+                attendanceViewModel = attendanceViewModel,
                 statisticsViewModel = statisticsViewModel,
                 helpSupportViewModel = helpSupportViewModel
             )
@@ -55,6 +68,8 @@ fun NavigationHost(
                 helpSupportViewModel = helpSupportViewModel
             )
         }
+
+
     }
 
 }
