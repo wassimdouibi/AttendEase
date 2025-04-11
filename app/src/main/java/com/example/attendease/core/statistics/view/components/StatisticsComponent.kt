@@ -1,4 +1,4 @@
-package com.example.attendease
+package com.example.attendease.core.statistics.view.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -21,21 +21,10 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 
 import androidx.compose.ui.unit.sp
+import com.example.attendease.R
+import com.example.attendease.ui.theme.LocalCustomColorScheme
+import com.example.attendease.ui.theme.LocalCustomTypographyScheme
 
-
-
-// Theme
-@Composable
-fun AttendEaseTheme(
-    content: @Composable () -> Unit
-) {
-    MaterialTheme(
-        colorScheme = lightColorScheme(),
-        content = content
-    )
-}
-
-// Enums and Data Classes
 enum class FilterType {
     TODAY, WEEKLY, MONTHLY
 }
@@ -45,45 +34,14 @@ data class GroupPresence(
     val presencePercentage: Double
 )
 
-// All the other supporting composables can be added here
-// For brevity, I'll include just a few as examples
-
-@Composable
-fun TopBar() {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        // Logo from drawable
-        Image(
-            painter = painterResource(id = R.drawable.logo),
-            contentDescription = "AttendEase Logo",
-            modifier = Modifier.size(40.dp)
-        )
-
-        // Profile Picture from drawable
-        Image(
-            painter = painterResource(id = R.drawable.a),
-            contentDescription = "Profile Picture",
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .size(40.dp)
-                .clip(CircleShape)
-        )
-    }
-}
-
 @Composable
 fun GroupAttendanceChart(
     groupData: List<GroupPresence>,
     selectedFilter: FilterType,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Row(
-        modifier = modifier,
+        modifier = modifier.padding(16.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         groupData.forEach { group ->
@@ -108,7 +66,7 @@ fun GroupAttendanceChart(
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = group.name,
-                    style = MaterialTheme.typography.bodySmall
+                    style = LocalCustomTypographyScheme.current.p_tiny
                 )
             }
         }
@@ -124,11 +82,6 @@ fun FilterSegmentControl(
         modifier = Modifier
             .width(358.dp)
             .height(40.dp)
-            .border(
-                width = 1.dp,
-                color = Color.White,
-                shape = RoundedCornerShape(18.5.dp)
-            )
             .background(Color.Transparent)
     ) {
         FilterSegmentButton(
@@ -176,11 +129,8 @@ fun FilterSegmentButton(
     ) {
         Text(
             text = text,
-            fontFamily = FontFamily.Default,
-            fontSize = 14.sp,
-            lineHeight = 22.sp,
+            style = LocalCustomTypographyScheme.current.p_large,
             color = if (isSelected) Color.White else selectedColor,
-            fontWeight = FontWeight.Normal
         )
     }
 }
@@ -189,15 +139,14 @@ fun FilterSegmentButton(
 fun StatisticCards() {
     Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
+            .fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         // Overall Absenteeism Card
         Box(
             modifier = Modifier
-                .width(358.dp)
-                .height(96.dp)
+                .fillMaxWidth()
+                .height(92.dp)
                 .background(
                     color = Color(0xFFE6F1FE),
                     shape = RoundedCornerShape(8.dp)
@@ -206,11 +155,8 @@ fun StatisticCards() {
         ) {
             Text(
                 text = "Overall absenteeism rate is 7%",
-                fontFamily = FontFamily.Default,
-                fontWeight = FontWeight.SemiBold,
-                fontSize = 24.sp,
-                lineHeight = 36.sp,
-                color = Color(0xFF171A1F),
+                style = LocalCustomTypographyScheme.current.heading3,
+                color = LocalCustomColorScheme.current.default900,
                 modifier = Modifier
                     .width(265.dp)
                     .height(72.dp)
@@ -262,97 +208,16 @@ fun StatisticCard(
         ) {
             Text(
                 text = title,
-                fontFamily = FontFamily.Default,
-                fontWeight = FontWeight.Medium,
-                fontSize = 16.sp,
-                lineHeight = 20.sp,
+                style = LocalCustomTypographyScheme.current.p_large,
                 color = Color.White,
                 modifier = Modifier.fillMaxWidth()
             )
             Text(
                 text = value,
-                fontWeight = FontWeight.SemiBold,
-                fontSize = 24.sp,
-                lineHeight = 30.sp,
+                style = LocalCustomTypographyScheme.current.heading3,
                 color = Color.White,
                 modifier = Modifier.fillMaxWidth()
             )
         }
-    }
-}
-
-@Composable
-fun BottomNavigationBar() {
-    NavigationBar(
-        containerColor = Color.White
-    ) {
-        NavigationBarItem(
-            icon = {
-                Icon(
-                    painterResource(id = R.drawable.document_normal),
-                    contentDescription = "Attendance",
-                    tint = Color(0xFF565E6C)
-                )
-            },
-            label = { Text("Attendance") },
-            selected = false,
-            onClick = { /* TODO: Navigate to Attendance */ },
-            colors = NavigationBarItemDefaults.colors(
-                unselectedIconColor = Color(0xFF565E6C),
-                selectedIconColor = Color(0xFF006FEE),
-                indicatorColor = Color.White
-            )
-        )
-        NavigationBarItem(
-            icon = {
-                Icon(
-                    painterResource(id = R.drawable.chart),
-                    contentDescription = "Statistics",
-                    tint = Color(0xFF006FEE)
-                )
-            },
-            label = { Text("Statistics") },
-            selected = true,
-            onClick = { /* Current screen */ },
-            colors = NavigationBarItemDefaults.colors(
-                unselectedIconColor = Color(0xFF565E6C),
-                selectedIconColor = Color(0xFF006FEE),
-                indicatorColor = Color.White
-            )
-        )
-        NavigationBarItem(
-            icon = {
-                Icon(
-                    painterResource(id = R.drawable.info_circle),
-                    contentDescription = "Aide & Support",
-                    tint = Color(0xFF565E6C)
-                )
-            },
-            label = { Text("Aide & Support") },
-            selected = false,
-            onClick = { /* TODO: Navigate to Aide & Support */ },
-            colors = NavigationBarItemDefaults.colors(
-                unselectedIconColor = Color(0xFF565E6C),
-                selectedIconColor = Color(0xFF006FEE),
-                indicatorColor = Color.White
-            )
-        )
-        NavigationBarItem(
-            icon = {
-                Icon(
-                    painterResource(id = R.drawable.logout),
-                    contentDescription = "Logout",
-                    tint = Color(0xFF565E6C)
-                )
-            },
-            label = { Text("Logout") },
-            selected = false,
-            onClick = { /* TODO: Implement Logout */ },
-            colors = NavigationBarItemDefaults.colors(
-                unselectedIconColor = Color(0xFF565E6C),
-                selectedIconColor = Color(0xFF006FEE),
-                indicatorColor = Color.White
-            )
-        )
     }
 }
