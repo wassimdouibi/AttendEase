@@ -2,8 +2,15 @@ package com.example.attendease.core.attendies.view
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -27,7 +34,7 @@ fun AttendiesView(
     attendiesViewModel: AttendiesViewModel,
 ){
     var currentState by remember { mutableStateOf(ProgressStep.Session) }
-    var markedByPresence by remember { mutableStateOf(AttendanceType.Presence) }
+    var markedBy by remember { mutableStateOf(AttendanceType.Presence) }
 
     val context = LocalContext.current
     var showDatePicker by remember { mutableStateOf(false) }
@@ -39,12 +46,29 @@ fun AttendiesView(
     Column(
         verticalArrangement = Arrangement.spacedBy(24.dp),
     ) {
-        Text(
-            text = "Attendance",
-            textAlign = TextAlign.Start,
-            color = LocalCustomColorScheme.current.default900,
-            style = LocalCustomTypographyScheme.current.heading1
-        )
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            IconButton(onClick = {
+                if (currentState == ProgressStep.Attendance) {
+                    currentState = ProgressStep.Session
+                }
+            }) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = "Back to the previous step"
+                )
+            }
+
+            Text(
+                text = "Attendance",
+                textAlign = TextAlign.Start,
+                color = LocalCustomColorScheme.current.default900,
+                style = LocalCustomTypographyScheme.current.heading1
+            )
+        }
+
         ProgressBar(
             currentStep = currentState
         )
@@ -94,8 +118,8 @@ fun AttendiesView(
             )
         } else {
             AttendanceTypes(
-                selectedType = AttendanceType.Presence,
-                onStateChange = {newValue -> markedByPresence = newValue}
+                selectedType = markedBy,
+                onStateChange = {newValue -> markedBy = newValue}
             )
             SectionHeader(
                 title = "Student List",

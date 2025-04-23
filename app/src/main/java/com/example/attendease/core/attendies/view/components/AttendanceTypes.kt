@@ -1,5 +1,7 @@
 package com.example.attendease.core.attendies.view.components
 
+import android.util.Log
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -9,6 +11,7 @@ import androidx.compose.ui.unit.dp
 import com.example.attendease.core.attendies.model.entity.AttendanceType
 import com.example.attendease.ui.theme.LocalCustomColorScheme
 import com.example.attendease.ui.theme.LocalCustomTypographyScheme
+import kotlin.math.log
 
 @Composable
 fun AttendanceTypes(
@@ -28,11 +31,13 @@ fun AttendanceTypes(
             verticalAlignment = Alignment.CenterVertically
         ) {
             AttendanceType.entries.forEachIndexed { _, type ->
-                Row(verticalAlignment = Alignment.CenterVertically)
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                )
                 {
                     RadioButton(
                         selected = selectedType == type,
-                        onClick = {onStateChange(AttendanceType.Absence)},
+                        onClick = { onStateChange(type) },
                         colors = RadioButtonDefaults.colors(
                             selectedColor = LocalCustomColorScheme.current.basePrimary,
                             unselectedColor = LocalCustomColorScheme.current.default300,

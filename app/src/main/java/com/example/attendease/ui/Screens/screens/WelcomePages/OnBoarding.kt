@@ -3,6 +3,7 @@ package com.example.attendease.ui.Screens.screens.WelcomePages
 
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -46,11 +47,11 @@ import com.example.attendease.ui.components.NormaleGreyTexte
 import kotlinx.coroutines.launch
 
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun OnBoarding(navController: NavController) {
     // State to manage the pager
-    val pagerState = rememberPagerState(0,0F,
-    ){3}
+    val pagerState = rememberPagerState(initialPage = 0) { 3 }
 
     Surface(
         color = Color.White,
@@ -193,6 +194,7 @@ fun DotIndicators(
 }
 
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun NavigationButtons(pagerState: PagerState, navController: NavController) {
     val coroutineScope = rememberCoroutineScope()
