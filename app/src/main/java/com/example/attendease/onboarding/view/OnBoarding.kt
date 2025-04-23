@@ -1,5 +1,4 @@
-package com.example.attendease.ui.Screens.screens.WelcomePages
-
+package com.example.attendease.onboarding.view
 
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
@@ -40,10 +39,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.attendease.R
-import com.example.attendease.ui.CustomBlue
-import com.example.attendease.ui.LightBlue
-import com.example.attendease.ui.components.BlueTitleTexteCenter
-import com.example.attendease.ui.components.NormaleGreyTexte
+import com.example.attendease.onboarding.components.BlueTitleTexteCenter
+import com.example.attendease.onboarding.components.NormaleGreyTexte
+import com.example.attendease.ui.theme.LocalCustomColorScheme
 import kotlinx.coroutines.launch
 
 
@@ -51,7 +49,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun OnBoarding(navController: NavController) {
     // State to manage the pager
-    val pagerState = rememberPagerState(initialPage = 0) { 3 }
+    val pagerState = rememberPagerState(0,0F,
+    ){3}
 
     Surface(
         color = Color.White,
@@ -94,81 +93,81 @@ fun SlideContent(page: Int) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
-    // Customize the content for each page
-    when (page) {
-        0 -> {
+        // Customize the content for each page
+        when (page) {
+            0 -> {
 
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.wifi),
-                    contentDescription = "wifiIcon",
-                    modifier = Modifier.width(140.dp)
-                )
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.wifi),
+                        contentDescription = "wifiIcon",
+                        modifier = Modifier.width(140.dp)
+                    )
 
-                Spacer(modifier = Modifier.height(80.dp))
-                BlueTitleTexteCenter("Pas d'internet ? pas de problème!")
-                Spacer(modifier = Modifier.height(40.dp))
-                NormaleGreyTexte("AttendEase vous permet de gérer les présences même sans connexion. Idéal pour ceux qui ont du mal à trouver une connexion internet stable.")
+                    Spacer(modifier = Modifier.height(80.dp))
+                    BlueTitleTexteCenter("Pas d'internet ? pas de problème!")
+                    Spacer(modifier = Modifier.height(40.dp))
+                    NormaleGreyTexte("AttendEase vous permet de gérer les présences même sans connexion. Idéal pour ceux qui ont du mal à trouver une connexion internet stable.")
+
+                }
 
             }
 
-        }
+            1 -> {
 
-        1 -> {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
+                ) {
+                    Spacer(modifier = Modifier.height(20.dp))
+                    Image(
+                        painter = painterResource(id = R.drawable.toggle),
+                        contentDescription = "toggleIcon",
+                        modifier = Modifier.width(180.dp)
+                    )
 
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
-            ) {
-                Spacer(modifier = Modifier.height(20.dp))
-                Image(
-                    painter = painterResource(id = R.drawable.toggle),
-                    contentDescription = "toggleIcon",
-                    modifier = Modifier.width(180.dp)
-                )
+                    Spacer(modifier = Modifier.height(80.dp))
+                    BlueTitleTexteCenter("Marquage flexible de la présence")
+                    Spacer(modifier = Modifier.height(40.dp))
+                    NormaleGreyTexte("Suivez facilement les présences grâce à une gestion flexible des présences et des absences. Vous avez le contrôle !")
+                }
 
-                Spacer(modifier = Modifier.height(80.dp))
-                BlueTitleTexteCenter("Marquage flexible de la présence")
-                Spacer(modifier = Modifier.height(40.dp))
-                NormaleGreyTexte("Suivez facilement les présences grâce à une gestion flexible des présences et des absences. Vous avez le contrôle !")
             }
 
-        }
+            2 -> {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
+                ) {
 
-        2 -> {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
-            ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.teacher),
+                        contentDescription = "teacherIcon",
+                        modifier = Modifier.width(170.dp)
+                            .height(200.dp)
+                    )
 
-                Image(
-                    painter = painterResource(id = R.drawable.teacher),
-                    contentDescription = "teacherIcon",
-                    modifier = Modifier.width(170.dp)
-                        .height(200.dp)
-                )
+                    Spacer(modifier = Modifier.height(42.dp))
+                    BlueTitleTexteCenter("Présence, gérée pour vous !")
+                    Spacer(modifier = Modifier.height(40.dp))
+                    NormaleGreyTexte("Gagnez du temps grâce à la saisie automatisée des présences. Laissez AttendEase s'en charger pour vous !")
 
-                Spacer(modifier = Modifier.height(42.dp))
-                BlueTitleTexteCenter("Présence, gérée pour vous !")
-                Spacer(modifier = Modifier.height(40.dp))
-                NormaleGreyTexte("Gagnez du temps grâce à la saisie automatisée des présences. Laissez AttendEase s'en charger pour vous !")
-
-                Spacer(modifier = Modifier.height(15.dp))
+                    Spacer(modifier = Modifier.height(15.dp))
+                }
             }
         }
     }
-}
 }
 
 @Composable
 fun DotIndicators(
     totalSlides: Int,
     currentPage: Int,
-    activeColor: Color = CustomBlue,
-    inactiveColor: Color = LightBlue,
+    activeColor: Color = LocalCustomColorScheme.current.primary500,
+    inactiveColor: Color = LocalCustomColorScheme.current.primary300,
     activeDotWidth: Dp = 32.dp,  // Wider active dot
     inactiveDotWidth: Dp = 10.dp, // Standard width for inactive dots
     dotHeight: Dp = 10.dp         // Uniform height for all dots
@@ -192,7 +191,6 @@ fun DotIndicators(
         }
     }
 }
-
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

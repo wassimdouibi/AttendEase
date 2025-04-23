@@ -12,6 +12,10 @@ import com.example.attendease.core.attendies.viewModel.AttendiesViewModel
 import com.example.attendease.core.navigation.view.AttendEaseNavView
 import com.example.attendease.core.statistics.view.StatisticsView
 import com.example.attendease.core.statistics.viewModel.StatisticsViewModel
+import com.example.attendease.onboarding.view.GetStarted
+import com.example.attendease.onboarding.view.Login
+import com.example.attendease.onboarding.view.LoadingScreen
+import com.example.attendease.onboarding.view.OnBoarding
 
 @Composable
 fun NavigationHost(
@@ -24,8 +28,22 @@ fun NavigationHost(
 ){
     NavHost(
         navController = navController,
-        startDestination = Router.AttendEaseNavScreen.route
+        startDestination = Router.LoadingScreen.route
     ) {
+        composable(Router.GetStartedScreen.route) { // Ensure this matches where it's used
+            GetStarted(navController)
+        }
+        composable(Router.OnBoardingScreen.route) {
+            OnBoarding(navController)
+        }
+        composable(Router.LoginScreen.route) {
+            Login(navController)
+        }
+
+        composable(Router.LoadingScreen.route) {
+            LoadingScreen {}
+        }
+
         composable(Router.AttendEaseNavScreen.route){
             AttendEaseNavView(
                 pref = pref,
@@ -55,7 +73,5 @@ fun NavigationHost(
                 helpSupportViewModel = helpSupportViewModel
             )
         }
-
     }
-
 }

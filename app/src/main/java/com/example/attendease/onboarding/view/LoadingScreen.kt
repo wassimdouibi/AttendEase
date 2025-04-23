@@ -1,4 +1,4 @@
-package com.example.attendease.screens
+package com.example.attendease.onboarding.view
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.Image
@@ -13,6 +13,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.attendease.R
+import com.example.attendease.ui.theme.LocalCustomColorScheme
 import kotlinx.coroutines.delay
 
 @Composable
@@ -39,7 +41,7 @@ fun LoadingScreen(onLoadingComplete: () -> Unit) {
         verticalArrangement = Arrangement.Center
     ) {
         Image(
-            painter = painterResource(id = com.example.attendease.R.drawable.logo_nav),// au lieu de la photo de loding!!!
+            painter = painterResource(id = R.drawable.logo_nav),// au lieu de la photo de loding!!!
             contentDescription = "Loading",
             modifier = Modifier.size(120.dp)
         )
@@ -68,11 +70,10 @@ fun LoadingScreen(onLoadingComplete: () -> Unit) {
         Spacer(modifier = Modifier.height(40.dp))
 
         LinearProgressIndicator(
-            progress = progress,
-            modifier = Modifier
-                .fillMaxWidth(0.8f)
-                .height(6.dp),
-            color = Color(0xFF007BFF)
+            progress = { progress },
+            modifier = Modifier.fillMaxWidth(.8f).height(12.dp),
+            color = LocalCustomColorScheme.current.primary500,
+            trackColor = LocalCustomColorScheme.current.default200,
         )
     }
 }

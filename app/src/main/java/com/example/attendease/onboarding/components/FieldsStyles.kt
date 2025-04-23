@@ -1,4 +1,4 @@
-package com.example.attendease.ui.components
+package com.example.attendease.onboarding.components
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth

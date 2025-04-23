@@ -1,6 +1,5 @@
 package com.example.attendease
 
-import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -51,7 +50,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     val navController = rememberNavController()
                     val context = LocalContext.current
-                    val pref = context.getSharedPreferences("local_AttendEase_data", Context.MODE_PRIVATE)
+                    val pref = context.getSharedPreferences("local_AttendEase_data", MODE_PRIVATE)
 
                     NavigationHost(
                         navController = navController,

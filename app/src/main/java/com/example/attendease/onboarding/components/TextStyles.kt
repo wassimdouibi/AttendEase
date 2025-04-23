@@ -1,8 +1,11 @@
-package com.example.attendease.ui.components
+package com.example.attendease.onboarding.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -12,42 +15,43 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.attendease.ui.CustomBlue
+import com.example.attendease.ui.theme.LocalCustomColorScheme
 
 
 @Composable
-    fun HaveAccount(navController: NavController)
-    {
-        Row (){
-            Text(
-                text = "Vous avez déjà un compte ?",
-                style = TextStyle(
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Normal,
-                    fontStyle = FontStyle.Normal,
-                    color = Color.Black,
-                    )
+fun HaveAccount(navController: NavController)
+{
+    Row (){
+        Text(
+            text = "Already have an account?",
+            style = TextStyle(
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Normal,
+                fontStyle = FontStyle.Normal,
+                color = Color.Black,
             )
-
-            Text(
-                text = " Se connecter",
-                style = TextStyle(
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    fontStyle = FontStyle.Normal,
-                    color = CustomBlue,
-                    textDecoration = TextDecoration.Underline
-                    ),
-                modifier = Modifier
-                    .clickable {
-                        // Navigate to "signIn" screen
-                        navController.navigate("Login")
-                    }
-            )
-        }
+        )
+        Spacer(modifier = Modifier.width(4.dp))
+        Text(
+            text = "Log in",
+            style = TextStyle(
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Medium,
+                fontStyle = FontStyle.Normal,
+                color = LocalCustomColorScheme.current.primary500,
+                textDecoration = TextDecoration.Underline
+            ),
+            modifier = Modifier
+                .clickable {
+                    // Navigate to "signIn" screen
+                    navController.navigate("Login")
+                }
+        )
     }
+}
 
 
 @Composable
@@ -70,7 +74,7 @@ fun DontHaveAccount(navController: NavController)
                 fontSize = 16.sp,
                 fontWeight = FontWeight.SemiBold,
                 fontStyle = FontStyle.Normal,
-                color = CustomBlue,
+                color = LocalCustomColorScheme.current.primary500,
                 textDecoration = TextDecoration.Underline
             ),
             modifier = Modifier
@@ -121,9 +125,9 @@ fun BlackTextCenter (value:String){
         modifier = Modifier.fillMaxWidth(), // to  align it to the left
         style = TextStyle(
             fontSize = 20.sp,
-            fontWeight = FontWeight.SemiBold,
+            fontWeight = FontWeight.Medium,
             fontStyle = FontStyle.Normal,
-            color = Color.Black,
+            color = LocalCustomColorScheme.current.default800,
             textAlign = TextAlign.Center
         )
     )
@@ -138,7 +142,7 @@ fun BlueTitleTexteCenter (value:String){
             fontWeight = FontWeight.Bold,
             fontStyle = FontStyle.Normal,
             textAlign = TextAlign.Center,
-            color = CustomBlue
+            color = LocalCustomColorScheme.current.primary500
         )
     )
 }
@@ -151,7 +155,7 @@ fun BlueTitleTexte (value:String){
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
             fontStyle = FontStyle.Normal,
-            color = CustomBlue
+            color = LocalCustomColorScheme.current.primary500
         )
     )
 }
