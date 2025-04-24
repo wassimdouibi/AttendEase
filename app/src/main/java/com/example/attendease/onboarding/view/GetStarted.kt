@@ -24,6 +24,7 @@ import com.example.attendease.R
 import com.example.attendease.onboarding.components.BlackButton
 import com.example.attendease.onboarding.components.BlackTextCenter
 import com.example.attendease.onboarding.components.HaveAccount
+import com.example.attendease.router.Router
 
 @Composable
 fun GetStarted (navController: NavController,modifier: Modifier = Modifier ) {
@@ -41,7 +42,6 @@ fun GetStarted (navController: NavController,modifier: Modifier = Modifier ) {
             contentDescription = "LogoIcon",
             modifier = Modifier.width(340.dp).height(100.dp)
         )
-
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
@@ -57,7 +57,7 @@ fun GetStarted (navController: NavController,modifier: Modifier = Modifier ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            BlackButton("Get Started", navController,"OnBoarding")
+            BlackButton("Get Started", navController, Router.OnBoardingScreen.route)
             Spacer(modifier = Modifier.height(16.dp))
             HaveAccount(navController)
         }

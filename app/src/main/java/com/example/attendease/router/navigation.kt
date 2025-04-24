@@ -1,6 +1,7 @@
 package com.example.attendease.router
 
 import android.content.SharedPreferences
+import android.provider.SyncStateContract.Constants
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -34,14 +35,28 @@ fun NavigationHost(
             GetStarted(navController)
         }
         composable(Router.OnBoardingScreen.route) {
-            OnBoarding(navController)
+            OnBoarding(
+                pref = pref,
+                navController = navController
+            )
         }
         composable(Router.LoginScreen.route) {
-            Login(navController)
+            Login(
+                pref = pref,
+                navController = navController
+            )
         }
 
         composable(Router.LoadingScreen.route) {
-            LoadingScreen {}
+            LoadingScreen {
+                if(pref.getBoolean("IS_USER_LOGGED_IN", true)){
+                    navController.navigate(Router.AttendEaseNavScreen.route)
+                } else if(pref.getBoolean("IS_ONBOARDING_DONE", true)) {
+                    navController.navigate(Router.LoginScreen.route)
+                } else {
+                    navController.navigate(Router.GetStartedScreen.route)
+                }
+            }
         }
 
         composable(Router.AttendEaseNavScreen.route){

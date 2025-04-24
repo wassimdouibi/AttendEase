@@ -1,20 +1,16 @@
 package com.example.attendease.onboarding.view
 
+import android.content.SharedPreferences
+import android.provider.SyncStateContract.Constants
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,19 +21,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.attendease.R
+import com.example.attendease.onboarding.components.BlackButton
 import com.example.attendease.onboarding.components.BlueTitleTexte
 import com.example.attendease.onboarding.components.GreyTexte
 import com.example.attendease.onboarding.components.MyTextField
 import com.example.attendease.onboarding.components.passwordTextField
-
+import com.example.attendease.router.Router
 
 @Composable
-fun Login(navController: NavController) {
+fun Login(
+    pref: SharedPreferences,
+    navController: NavController
+) {
     var email = remember { mutableStateOf("") }
     var password = remember { mutableStateOf("") }
     var errorMessage = remember { mutableStateOf("") }
@@ -92,39 +90,7 @@ fun Login(navController: NavController) {
 
             Spacer(modifier = Modifier.height(50.dp))
 
-
-            Button(onClick = {
-
-                if (email.value.isBlank() || password.value.isBlank()) {
-                    errorMessage.value = "All fields are required"
-                    return@Button
-                }
-
-            },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .heightIn(56.dp),
-
-                contentPadding = PaddingValues(),
-                colors = ButtonDefaults.buttonColors(Color.Black),
-                shape = RoundedCornerShape(100.dp)
-            ) {
-                Box (modifier = Modifier
-                    .fillMaxWidth()
-                    .heightIn(48.dp)
-                    .background(
-                        color = Color.Black,
-                    ),
-                    contentAlignment = Alignment.Center)
-                {
-                    Text(
-                        text = "Login",
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White
-                    )
-                }
-            }
+            BlackButton("Login", navController, Router.AttendEaseNavScreen.route, {pref.edit().putBoolean("IS_USER_LOGGED_IN", true).apply()})
 
             Spacer(modifier = Modifier.weight(1f))
             Spacer(modifier = Modifier.height(15.dp))

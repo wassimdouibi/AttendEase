@@ -1,5 +1,6 @@
 package com.example.attendease.onboarding.view
 
+import android.content.SharedPreferences
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -41,13 +42,17 @@ import androidx.navigation.NavController
 import com.example.attendease.R
 import com.example.attendease.onboarding.components.BlueTitleTexteCenter
 import com.example.attendease.onboarding.components.NormaleGreyTexte
+import com.example.attendease.router.Router
 import com.example.attendease.ui.theme.LocalCustomColorScheme
 import kotlinx.coroutines.launch
 
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun OnBoarding(navController: NavController) {
+fun OnBoarding(
+    pref: SharedPreferences,
+    navController: NavController
+) {
     // State to manage the pager
     val pagerState = rememberPagerState(0,0F,
     ){3}
@@ -79,7 +84,7 @@ fun OnBoarding(navController: NavController) {
             )
 
             Spacer(modifier = Modifier.weight(1f))
-            NavigationButtons( pagerState ,navController)
+            NavigationButtons( pagerState ,navController, pref)
 
             Spacer(modifier = Modifier.height(15.dp))
         }
@@ -194,7 +199,7 @@ fun DotIndicators(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun NavigationButtons(pagerState: PagerState, navController: NavController) {
+fun NavigationButtons(pagerState: PagerState, navController: NavController, pref: SharedPreferences) {
     val coroutineScope = rememberCoroutineScope()
 
     Row(
@@ -240,7 +245,9 @@ fun NavigationButtons(pagerState: PagerState, navController: NavController) {
                             animationSpec = tween(durationMillis = 500, easing = FastOutSlowInEasing)
                         )
                     } else {
-                        navController.navigate("Login") // Navigate to login on the last page
+                        pref.edit().putBoolean("IS_ONBOARDING_DONE", true).apply()
+                        navController.popBackStack()
+                        navController.navigate(Router.LoginScreen.route)
                     }
                 }
             },
@@ -251,7 +258,7 @@ fun NavigationButtons(pagerState: PagerState, navController: NavController) {
             shape = RoundedCornerShape(100.dp)
         ) {
             Text(
-                text = if (pagerState.currentPage < pagerState.pageCount - 1) "suivant" else "connexion",
+                text = if (pagerState.currentPage < pagerState.pageCount - 1) "Next" else "Connexion",
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.White

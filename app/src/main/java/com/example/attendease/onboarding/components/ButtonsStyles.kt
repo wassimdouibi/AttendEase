@@ -20,9 +20,10 @@ import androidx.navigation.NavController
 
 
 @Composable
-fun BlackButton(value: String, navController: NavController, destination: String){
+fun BlackButton(value: String, navController: NavController, destination: String, setNewValueLocalPreferences: () -> Unit = {}) {
     Button(
         onClick = {
+            setNewValueLocalPreferences()
             navController.navigate(destination)
         },
         modifier = Modifier

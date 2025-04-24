@@ -50,11 +50,11 @@ class MainActivity : ComponentActivity() {
                 ) {
                     val navController = rememberNavController()
                     val context = LocalContext.current
-                    val pref = context.getSharedPreferences("local_AttendEase_data", MODE_PRIVATE)
+                    val sharedPref = context.getSharedPreferences("first_time_connected", MODE_PRIVATE)
 
                     NavigationHost(
                         navController = navController,
-                        pref = pref,
+                        pref = sharedPref,
 
                         attendiesViewModel = attendiesViewModel,
                         statisticsViewModel = statisticsViewModel,
