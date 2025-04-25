@@ -1,7 +1,6 @@
 package com.example.attendease.core.data.entity
 
 import androidx.room.Entity
-import androidx.room.PrimaryKey
 import java.util.Date
 
 @Entity(
