@@ -101,7 +101,7 @@ fun Login(navController: NavController) {
                 Button(onClick = {
 
                     if (email.value.isBlank() || password.value.isBlank()) {
-                        errorMessage.value = "All fields are required"
+                        errorMessage.value = "Tous les champs sont obligatoires"
                         return@Button
                     }
 
