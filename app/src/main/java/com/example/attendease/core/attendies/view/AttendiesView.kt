@@ -63,9 +63,9 @@ fun AttendiesView(
 
 
     LaunchedEffect(Unit) {
-//        attendiesViewModel.initializeTestData()
-//        attendiesViewModel.deleteAllClassInfo()
+        attendiesViewModel.initializeTestData()
         attendiesViewModel.getAllClassesInfo()
+        attendiesViewModel.initializeTestDataStudents()
     }
 
     Column(

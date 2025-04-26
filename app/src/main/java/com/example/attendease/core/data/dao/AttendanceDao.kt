@@ -6,62 +6,72 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import com.example.attendease.core.data.entity.Attendance
-import com.example.attendease.core.data.entity.AttendanceWithStudents
+import com.example.attendease.core.data.entity.AttendanceWithStudentAndClassInfo
 import kotlinx.coroutines.flow.Flow
-import java.util.Date
 
 @Dao
 interface AttendanceDao {
-     @Query("SELECT * FROM attendance_table ORDER BY date, timeStart, timeEnd ASC")
+     @Query("SELECT * FROM attendance_table")
      fun getAttendanceAll(): Flow<List<Attendance>>
 
-     @Query("SELECT * FROM attendance_table WHERE attendanceId = :id")
-     fun getAttendanceById(id: Int): Flow<Attendance>
+     @Query("SELECT * FROM attendance_table WHERE classInfoId = :classInfoId AND studentId = :studentId")
+     fun getStudentAttendanceInSpecificClass(classInfoId: Long, studentId: Long): Flow<Attendance>
 
-     @Query("SELECT * FROM attendance_table WHERE date = :date ORDER BY timeStart, timeEnd ASC")
-     fun getAttendanceByDate(date: Date): Flow<List<Attendance>>
+     @Query("SELECT * FROM attendance_table WHERE  studentId= :studentId")
+     fun getStudentAttendance(studentId: Long): Flow<List<Attendance>>
 
-     @Query("SELECT * FROM attendance_table WHERE (date = :date AND timeStart = :timeStart AND timeEnd = :timeEnd) ORDER BY date, timeStart, timeEnd ASC ")
-     fun getAttendanceByDateAndTime(date: Date, timeStart: String, timeEnd: String): Flow<List<Attendance>>
-
-     @Query("SELECT * FROM attendance_table WHERE groupOrSection = :groupOrSection ORDER BY date, timeStart, timeEnd ASC")
-     fun getAttendanceByGroupOrSection(groupOrSection: String): Flow<List<Attendance>>
-
-     @Query("SELECT * FROM attendance_table WHERE (groupOrSection = :groupOrSection AND date = :date) ORDER BY date, timeStart, timeEnd ASC")
-     fun getAttendanceByDateAndGroupOrSection(groupOrSection: String, date: Date): Flow<List<Attendance>>
-
-    @Query("SELECT * FROM attendance_table WHERE (groupOrSection = :groupOrSection AND date = :date AND timeStart = :timeStart AND timeEnd = :timeEnd) ORDER BY date, timeStart, timeEnd ASC")
-    fun getAttendanceByDateAndTimeAndGroupOrSection(groupOrSection: String, date: Date, timeStart: String, timeEnd: String): Flow<Attendance>
-
-
-    @Transaction
-    @Query("SELECT * FROM attendance_table ORDER BY date, timeStart, timeEnd ASC")
-    fun getAttendanceWithStudentsAll(): Flow<List<AttendanceWithStudents>>
-
-    @Transaction
-    @Query("SELECT * FROM attendance_table WHERE attendanceId = :id")
-    fun getAttendanceWithStudentsById(id: Int): Flow<AttendanceWithStudents>
-
-    @Transaction
-    @Query("SELECT * FROM attendance_table WHERE date = :date ORDER BY timeStart, timeEnd ASC")
-    fun getAttendanceWithStudentsByDate(date: Date): Flow<List<AttendanceWithStudents>>
-
-    @Transaction
-    @Query("SELECT * FROM attendance_table WHERE (date = :date AND timeStart = :timeStart AND timeEnd = :timeEnd) ORDER BY date, timeStart, timeEnd ASC ")
-    fun getAttendanceWithStudentsByDateAndTime(date: Date, timeStart: String, timeEnd: String): Flow<List<AttendanceWithStudents>>
-
-    @Transaction
-    @Query("SELECT * FROM attendance_table WHERE groupOrSection = :groupOrSection")
-    fun getAttendanceWithStudentsByGroupOrSection(groupOrSection: String): Flow<List<AttendanceWithStudents>>
-
-    @Transaction
-    @Query("SELECT * FROM attendance_table WHERE (groupOrSection = :groupOrSection AND date = :date) ORDER BY date, timeStart, timeEnd ASC")
-    fun getAttendanceWithStudentsByDateAndGroupOrSection(groupOrSection: String, date: Date): Flow<List<AttendanceWithStudents>>
-
-    @Transaction
-    @Query("SELECT * FROM attendance_table WHERE (groupOrSection = :groupOrSection AND date = :date AND timeStart = :timeStart AND timeEnd = :timeEnd) ORDER BY date, timeStart, timeEnd ASC")
-    fun getAttendanceWithStudentsByDateAndTimeAndGroupOrSection(groupOrSection: String, date: Date, timeStart: String, timeEnd: String): Flow<AttendanceWithStudents>
+     @Query("SELECT * FROM attendance_table WHERE classInfoId = :classInfoId")
+     fun getAttendanceOfSpecificClass(classInfoId: Long): Flow<List<Attendance>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAttendance(attendance: Attendance) : Long
+
+    @Transaction
+    @Query("SELECT * FROM attendance_table")
+    fun getAllAttendanceWithDetails(): Flow<List<AttendanceWithStudentAndClassInfo>>
+
+    @Transaction
+    @Query("""
+        SELECT COUNT(*)
+        FROM attendance_table
+        INNER JOIN students_table ON attendance_table.studentId = students_table.studentId
+        WHERE attendance_table.studentId = :studentId
+          AND attendance_table.classInfoId = :classInfoId
+          AND attendanceType = :attendanceType
+    """)
+    fun getNumberOfAttendanceForStudent(
+        studentId: Long,
+        classInfoId: Long,
+        attendanceType: String
+    ): Int
+
+    @Transaction
+    @Query("""
+        SELECT  Count(*) AS numberOfAttendance
+        FROM attendance_table
+        INNER JOIN students_table ON attendance_table.studentId = students_table.studentId
+        WHERE classInfoId = :classInfoId AND attendanceType = :attendanceType
+    """)
+    fun getNumberOfAttendanceForClass(classInfoId: Long, attendanceType: String): Int
+
+    @Transaction
+    @Query("""
+        SELECT Count(*)
+        FROM attendance_table
+        INNER JOIN students_table ON attendance_table.studentId = students_table.studentId
+        WHERE students_table.section = :section
+    """)
+    fun getAttendanceWithDetailsBySection(section: String): Int
+
+    @Transaction
+    @Query("""
+        SELECT Count(*)
+        FROM attendance_table
+        INNER JOIN students_table ON attendance_table.studentId = students_table.studentId
+        WHERE students_table.groupe = :group AND students_table.section = :section
+    """)
+    fun getAttendanceWithDetailsByGroup(
+        group: String,
+        section: String
+    ): Int
 }

@@ -15,7 +15,7 @@ import java.util.Date
     ]
 )
 data class ClassInfo(
-    @PrimaryKey(autoGenerate = true) val id: Long = 0,
+    @PrimaryKey(autoGenerate = true) val classInfoId: Long = 0,
     val title: String,
     val date: Date,
     val timeStart: String,

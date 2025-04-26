@@ -24,7 +24,8 @@ class AttendEaseApplication: Application() {
     val attendiesRepository: AttendiesRepository by lazy { AttendiesRepository(
             attendiesService,
             database.getAttendanceDao(),
-            database.getClassInfoDao()
+            database.getClassInfoDao(),
+            database.getStudentDao(),
         )
     }
 

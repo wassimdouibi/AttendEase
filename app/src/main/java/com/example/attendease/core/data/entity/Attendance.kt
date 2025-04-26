@@ -2,26 +2,27 @@ package com.example.attendease.core.data.entity
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
-import androidx.room.PrimaryKey
-import com.example.attendease.core.attendies.model.entity.AttendanceType
-import java.util.Date
 
 @Entity(
     tableName = "attendance_table",
+    primaryKeys = ["classInfoId", "studentId"],
     foreignKeys = [
         ForeignKey(
             entity = ClassInfo::class,
-            parentColumns = ["date", "timeStart", "timeEnd", "groupOrSection"],
-            childColumns = ["date", "timeStart", "timeEnd", "groupOrSection"],
+            parentColumns = ["classInfoId"],
+            childColumns = ["classInfoId"],
+            onDelete = ForeignKey.CASCADE
+        ),
+        ForeignKey(
+            entity = Student::class,
+            parentColumns = ["studentId"],
+            childColumns = ["studentId"],
             onDelete = ForeignKey.CASCADE
         )
     ]
 )
 data class Attendance(
-    @PrimaryKey(autoGenerate = true) val attendanceId: Long = 0,
-    val date: Date,
-    val timeStart: String,
-    val timeEnd: String,
-    val groupOrSection: String,
-    val attendanceType: AttendanceType,
+    val classInfoId: Long,
+    val studentId: Long,
+    val attendanceType: String
 )
