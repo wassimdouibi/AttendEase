@@ -1,16 +1,23 @@
 package com.example.attendease.core.attendies.view
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -21,6 +28,8 @@ import com.example.attendease.core.attendies.model.entity.Session
 import com.example.attendease.core.attendies.model.entity.Student
 import com.example.attendease.core.attendies.view.components.*
 import com.example.attendease.core.attendies.viewModel.AttendiesViewModel
+import com.example.attendease.core.data.dao.ClassInfoDao
+import com.example.attendease.core.data.entity.ClassInfo
 import com.example.attendease.ui.theme.LocalCustomColorScheme
 import com.example.attendease.ui.theme.LocalCustomTypographyScheme
 import java.text.SimpleDateFormat
@@ -33,15 +42,31 @@ fun AttendiesView(
     navController: NavHostController,
     attendiesViewModel: AttendiesViewModel,
 ){
+    // UI States
+    val context = LocalContext.current
     var currentState by remember { mutableStateOf(ProgressStep.Session) }
     var markedBy by remember { mutableStateOf(AttendanceType.Presence) }
-
-    val context = LocalContext.current
     var showDatePicker by remember { mutableStateOf(false) }
     var showFilterPopup by remember { mutableStateOf(false) }
     // var selectedDate by remember { mutableStateOf(LocalDate.now()) }
     val dateFormat = SimpleDateFormat("EEEE, d MMMM yyyy", Locale.getDefault())
-    var selectedDate by remember { mutableStateOf(dateFormat.format(Date())) } // Default to today's date
+    var selectedDate by remember { mutableStateOf(dateFormat.format(Date())) }
+
+
+    // Data Flows
+    val classesInfo by attendiesViewModel.classesInfo.collectAsState()
+
+
+    // State Management
+    val isLoading by attendiesViewModel.isLoading.collectAsState()
+    val error by attendiesViewModel.error.collectAsState()
+
+
+    LaunchedEffect(Unit) {
+//        attendiesViewModel.initializeTestData()
+//        attendiesViewModel.deleteAllClassInfo()
+        attendiesViewModel.getAllClassesInfo()
+    }
 
     Column(
         verticalArrangement = Arrangement.spacedBy(24.dp),
@@ -79,43 +104,46 @@ fun AttendiesView(
                 title = "Sessions",
                 subtitle = "Please select the sessions to proceed with your actions."
             )
-            ClassesList(
-                listOf(
-                    Session(
-                        name = "Cours MPSI",
-                        salle = "S11+S12",
-                        startHour = LocalTime.of(9, 0),   // 09:00 AM
-                        endHour = LocalTime.of(10, 30)    // 10:30 AM
-                    ),
-                    Session(
-                        name = "TP BI",
-                        salle = "S_Audi",
-                        startHour = LocalTime.of(10, 40), // 10:40 AM
-                        endHour = LocalTime.of(12, 10)    // 12:10 PM
-                    ),
-                    Session(
-                        name = "Cours AL",
-                        salle = "DE-0-A7",
-                        startHour = LocalTime.of(12, 45), // 12:45 PM
-                        endHour = LocalTime.of(14, 15)    // 02:15 PM
-                    ),
-                    Session(
-                        name = "Cours COFI",
-                        salle = "S18+S19",
-                        startHour = LocalTime.of(10, 40), // 10:40 AM
-                        endHour = LocalTime.of(12, 10)    // 12:10 PM
-                    ),
-                    Session(
-                        name = "Projet PR.IS",
-                        salle = "TBD",
-                        startHour = LocalTime.of(10, 40), // 10:40 AM
-                        endHour = LocalTime.of(12, 10)
-                    )
-                ),
-                onStateChange = { newStep ->
-                    currentState = newStep
+
+            when {
+                (isLoading) -> {
+                    Column(
+                        modifier = Modifier.fillMaxSize(),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        CircularProgressIndicator()
+                    }
                 }
-            )
+                error != null -> {
+                    Text(
+                        text = "Error: $error",
+                        color = MaterialTheme.colorScheme.error,
+                        modifier = Modifier.padding(16.dp)
+                    )
+                }
+                classesInfo.isEmpty() -> {
+                    Text(
+                        text = "No classes available",
+                        modifier = Modifier.padding(16.dp)
+                    )
+                }
+                else -> {
+                    ClassesList(
+                        classesInfo.map { classInfo ->
+                            Session(
+                                name = classInfo.title,
+                                salle = classInfo.salle,
+                                startHour = LocalTime.parse(classInfo.timeStart),
+                                endHour = LocalTime.parse(classInfo.timeEnd),
+                            )
+                        },
+                        onStateChange = { newStep ->
+                            currentState = newStep
+                        }
+                    )
+                }
+            }
         } else {
             AttendanceTypes(
                 selectedType = markedBy,
@@ -151,5 +179,16 @@ fun AttendiesView(
                 onStateChange = {newStep -> currentState = newStep}
             )
         }
+    }
+}
+
+
+fun parseTimeString(timeString: String): LocalTime {
+    return try {
+        // Assuming format is "HH:mm"
+        val parts = timeString.split(":")
+        LocalTime.of(parts[0].toInt(), parts[1].toInt())
+    } catch (e: Exception) {
+        LocalTime.of(12, 0) // Default fallback time
     }
 }

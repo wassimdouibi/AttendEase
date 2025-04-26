@@ -1,12 +1,145 @@
 package com.example.attendease.core.attendies.viewModel
 
+import android.util.Log
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
+import androidx.room.Room
 import com.example.attendease.core.attendies.model.respository.AttendiesRepository
+import com.example.attendease.core.data.AppDataBase
+import com.example.attendease.core.data.entity.ClassInfo
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.util.Calendar
 
 class AttendiesViewModel(val attendiesRepository: AttendiesRepository) : ViewModel() {
+    private val _classesInfo = MutableStateFlow<List<ClassInfo>>(emptyList())
+    val classesInfo: StateFlow<List<ClassInfo>> = _classesInfo.asStateFlow()
 
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading = _isLoading.asStateFlow()
+    private val _error = MutableStateFlow<String?>(null)
+    val error = _error.asStateFlow()
 
+    fun getAllClassesInfo() {
+        viewModelScope.launch {
+            try {
+                _isLoading.value = true
+                _error.value = null
+
+                val response = attendiesRepository.getAllClassInfo().first()
+                _classesInfo.value = response
+            } catch (e: Exception) {
+                _error.value = e.message ?: "An unknown error occurred"
+            } finally {
+                _isLoading.value = false
+            }
+        }
+    }
+
+    fun deleteAllClassInfo() {
+        viewModelScope.launch {
+            try {
+                _isLoading.value = true
+                _error.value = null
+                attendiesRepository.deleteAllClassInfo()
+            } catch (e: Exception) {
+                _error.value = e.message ?: "An unknown error occurred"
+            } finally {
+                _isLoading.value = false
+            }
+        }
+    }
+
+    fun setClassInfo(classInfo: ClassInfo) {
+        viewModelScope.launch {
+            try {
+                _isLoading.value = true
+                _error.value = null
+                attendiesRepository.setClassInfo(classInfo)
+            } catch (e: Exception) {
+                _error.value = e.message ?: "An unknown error occurred"
+            } finally {
+                _isLoading.value = false
+            }
+        }
+    }
+
+    fun initializeTestData() {
+        viewModelScope.launch {
+            val classes = listOf(
+                ClassInfo(
+                    title = "Math Class",
+                    date = Calendar.getInstance().apply { set(2025, Calendar.APRIL, 25) }.time,
+                    timeStart = "08:00",
+                    timeEnd = "10:00",
+                    groupOrSection = "A1",
+                    salle = "Room 101"
+                ),
+                ClassInfo(
+                    title = "Physics Class",
+                    date = Calendar.getInstance().apply { set(2025, Calendar.APRIL, 25) }.time,
+                    timeStart = "10:30",
+                    timeEnd = "12:30",
+                    groupOrSection = "B2",
+                    salle = "Room 202"
+                ),
+                ClassInfo(
+                    title = "Chemistry Class",
+                    date = Calendar.getInstance().apply { set(2025, Calendar.APRIL, 25) }.time,
+                    timeStart = "12:30",
+                    timeEnd = "15:00",
+                    groupOrSection = "C3",
+                    salle = "Room 303"
+                ),
+                ClassInfo(
+                    title = "Android Dev",
+                    date = Calendar.getInstance().apply { set(2025, Calendar.APRIL, 25) }.time,
+                    timeStart = "09:45",
+                    timeEnd = "11:00",
+                    groupOrSection = "B2",
+                    salle = "Room 1"
+                ),
+                ClassInfo(
+                    title = "English Class",
+                    date = Calendar.getInstance().apply { set(2025, Calendar.APRIL, 25) }.time,
+                    timeStart = "13:00",
+                    timeEnd = "14:30",
+                    groupOrSection = "G2",
+                    salle = "Room 105"
+                ),
+                ClassInfo(
+                    title = "Computer Science",
+                    date = Calendar.getInstance().apply { set(2025, Calendar.APRIL, 25) }.time,
+                    timeStart = "08:30",
+                    timeEnd = "11:30",
+                    groupOrSection = "G1",
+                    salle = "Lab 404"
+                )
+            )
+
+            try {
+                _isLoading.value = true
+                // Use a transaction to insert all classes at once
+                classes.forEach { classInfo ->
+                    withContext(Dispatchers.IO) {
+                        // Use the renamed method from earlier
+                        attendiesRepository.setClassInfo(classInfo)
+                    }
+                }
+            } catch (e: Exception) {
+                _error.value = e.message ?: "An unknown error occurred"
+            } finally {
+                _isLoading.value = false
+            }
+        }
+    }
 
     class Factory(private val attendiesRepository: AttendiesRepository) :
         ViewModelProvider.Factory {

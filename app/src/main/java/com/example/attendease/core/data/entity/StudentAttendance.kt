@@ -5,7 +5,7 @@ import androidx.room.ForeignKey
 import com.example.attendease.core.attendies.model.entity.Student
 
 @Entity(
-    tableName = "student_attendance",
+    tableName = "student_attendance_table",
     primaryKeys = ["attendanceId", "studentName"],
     foreignKeys = [
         ForeignKey(
