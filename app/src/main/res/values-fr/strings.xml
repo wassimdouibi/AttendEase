@@ -1,0 +1,88 @@
+<resources>
+    <!-- App basics -->
+    <string name="app_name">AttendEase</string>
+    <string name="welcome_message">Bienvenue sur AttendEase !</string>
+
+    <!--    Get started Page     -->
+    <string name="get_started_slogan">"Là où la présence devient simple !"</string>
+    <string name="get_started_cta">Commencer</string>
+
+    <!--    Loading Screen    -->
+    <string name="loading_screen_msg1">Préparation de tout pour vous…</string>
+    <string name="loading_screen_msg2">Nous préparons vos données de présence</string>
+    <string name="loading_screen_msg3">Mise en place en cours ! 📑</string>
+    <string name="loading_screen_msg4">Presque prêt ! ⏳</string>
+    <string name="loading_screen_msg5">C\'est fait ! ✔</string>
+
+    <!--    Login Screen    -->
+    <string name="login_screen_title">Bon retour</string>
+    <string name="login_screen_subtitle">Connectez-vous à votre compte AttendEase</string>
+    <string name="login_screen_email_input">Email</string>
+    <string name="login_screen_password_input">Mot de passe</string>
+    <string name="login_screen_cta">Se connecter</string>
+
+    <!--    OnBoarding Screen   -->
+    <string name="onboarding_title1">Pas d\'internet ? Pas de problème !</string>
+    <string name="onboarding_subtitle1">AttendEase vous permet de gérer les présences même sans connexion. Parfait pour ceux ayant une connexion instable.</string>
+
+    <string name="onboarding_title2">Gestion flexible des présences</string>
+    <string name="onboarding_subtitle2">Suivez facilement les présences avec une gestion flexible des présences et absences. Vous avez le contrôle !</string>
+
+    <string name="onboarding_title3">Présence, gérée pour vous !</string>
+    <string name="onboarding_subtitle3">Gagnez du temps grâce à la saisie automatisée des présences. Laissez AttendEase s\'en charger !</string>
+
+    <string name="onboarding_next_cta">Suivant</string>
+    <string name="onboarding_connexion">Connexion</string>
+
+    <!--    Help & Support    -->
+    <string name="help_support_contact_email">Email</string>
+    <string name="help_support_contact_phone">Téléphone</string>
+    <string name="help_support_contact_office">Heures de bureau</string>
+    <string name="help_support_title">Aide &amp; Support</string>
+    <string name="help_support_subtitle1">Instructions générales</string>
+    <string name="help_support_subtitle2">Questions fréquentes</string>
+    <string name="help_support_subtitle3">Contacter le support</string>
+
+    <string name="faq_q1">Comment utiliser l\'application ?</string>
+    <string name="faq_q2">Comment réinitialiser mon mot de passe ?</string>
+    <string name="faq_q3">Comment signaler un problème ?</string>
+    <string name="faq_a1">Vous pouvez utiliser l\'application en suivant ces étapes…</string>
+    <string name="faq_a2">Pour réinitialiser votre mot de passe, allez dans les paramètres…</string>
+    <string name="faq_a3">Si vous rencontrez un problème, veuillez contacter le support…</string>
+
+    <string name="general_instructions_do">À faire</string>
+    <string name="general_instructions_dont">À ne pas faire</string>
+
+    <string name="navitem_1">Présences</string>
+    <string name="navitem_2">Statistiques</string>
+    <string name="navitem_3">Aide &amp; Support</string>
+    <string name="navitem_4">Déconnexion</string>
+
+    <string name="statistics_title">Statistiques</string>
+    <string name="statistics_subtitle">Taux moyen de présence par groupe</string>
+    <string name="statistics_filter_today">Aujourd\'hui</string>
+    <string name="statistics_filter_weekly">Hebdomadaire</string>
+    <string name="statistics_filter_monthly">Mensuel</string>
+    <string name="statistics_overall_stats">Le taux global d\'absentéisme est de 7%</string>
+    <string name="statistics_overall_most_absentee">Le taux global d\'absentéisme est de 7%</string>
+    <string name="statistics_overall_total_number_absentees">Absences enregistrées</string>
+
+    <!--    Attendies Pages     -->
+    <string name="attendies_types">Type de présence</string>
+    <string name="attendies_search_for_student">Rechercher un étudiant par nom</string>
+    <string name="attendies_confirm_cta">Confirmer</string>
+    <string name="attendies_search_for_session">Rechercher votre session</string>
+    <string name="attendies_calendar_change_cta">Changer</string>
+    <string name="attendies_calendar_applyFilters_cta">Appliquer les filtres</string>
+    <string name="attendies_calendar_reset_cta">Réinitialiser</string>
+    <string name="attendies_calendar_title_filterSessions">Filtrer les sessions</string>
+    <string name="attendies_calendar_title_sessionType">Type de session</string>
+    <string name="attendies_calendar_title_timeOfDay">Moment de la journée</string>
+    <string name="attendies_title">Présences</string>
+    <string name="attendies_sessions_title">Présences</string>
+    <string name="attendies_sessions_subtitle">Veuillez sélectionner les sessions pour poursuivre vos actions.</string>
+    <string name="attendies_sessions_none_session">Aucune classe disponible</string>
+    <string name="attendies_student_title">Liste des étudiants</string>
+    <string name="attendies_student_subtitle">Veuillez sélectionner les étudiants pour poursuivre vos actions.</string>
+    <string name="attendies_student_none_student">Aucun étudiant disponible pour cette classe</string>
+</resources>
