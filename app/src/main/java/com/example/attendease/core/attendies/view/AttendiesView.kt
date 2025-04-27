@@ -71,6 +71,21 @@ fun AttendiesView(
 //        attendiesViewModel.initializeTestDataStudents()
 //        attendiesViewModel.initializeTestAttendancesData()
         attendiesViewModel.getAllClassesInfo()
+        attendiesViewModel.getStudentsOfAClassWithAttendances(0, AttendanceType.Presence)
+    }
+
+    LaunchedEffect(currentState) {
+        if (currentState == ProgressStep.Session) {
+            attendiesViewModel.getAllClassesInfo()
+        }
+    }
+
+    LaunchedEffect(markedBy) {
+        if (markedBy == AttendanceType.Absence) {
+            attendiesViewModel.getStudentsOfAClassWithAttendances(selectedClass?.sessionId ?: 0, markedBy)
+        } else {
+            attendiesViewModel.getStudentsOfAClassWithAttendances(selectedClass?.sessionId ?: 0, markedBy)
+        }
     }
 
     LaunchedEffect(selectedClass) {
