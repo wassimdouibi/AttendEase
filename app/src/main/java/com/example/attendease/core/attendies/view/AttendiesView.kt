@@ -67,8 +67,9 @@ fun AttendiesView(
     LaunchedEffect(Unit) {
 //        attendiesViewModel.deleteAllClassInfo()
 //        attendiesViewModel.deleteAllStudents()
-//        attendiesViewModel.initializeTestData()
+//        attendiesViewModel.initializeTestClassesData()
 //        attendiesViewModel.initializeTestDataStudents()
+//        attendiesViewModel.initializeTestAttendancesData()
         attendiesViewModel.getAllClassesInfo()
     }
 

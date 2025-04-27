@@ -3,20 +3,22 @@ package com.example.attendease.core.attendies.model.respository
 import android.util.Log
 import com.example.attendease.core.attendies.model.entity.AttendanceType
 import com.example.attendease.core.attendies.model.services.AttendiesService
+import com.example.attendease.core.data.dao.AttendanceDao
 import com.example.attendease.core.data.dao.ClassInfoDao
 import com.example.attendease.core.data.dao.StudentDao
+import com.example.attendease.core.data.entity.Attendance
 import com.example.attendease.core.data.entity.ClassInfo
 import com.example.attendease.core.data.entity.Student
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 
+
 class AttendiesRepository(
     private val attendiesService: AttendiesService,
-//    private val attendanceDao: AttendanceDao,
+    private val attendanceDao: AttendanceDao,
     private val classInfoDao: ClassInfoDao,
     private val studentDao: StudentDao,
 //    private val studentAttendanceDao: StudentAttendanceDao
@@ -58,6 +60,10 @@ class AttendiesRepository(
             Log.e("Repository", "Error getting student info", e)
             emit(emptyList())
         }
+    }
+
+    suspend fun setAttendanceRow(attendanceRow: Attendance) = withContext(Dispatchers.IO) {
+        attendanceDao.insertAttendance(attendanceRow)
     }
 
 }

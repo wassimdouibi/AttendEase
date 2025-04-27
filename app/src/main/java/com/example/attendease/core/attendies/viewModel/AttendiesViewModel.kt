@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.attendease.core.attendies.model.entity.AttendanceType
 import com.example.attendease.core.attendies.model.respository.AttendiesRepository
+import com.example.attendease.core.data.entity.Attendance
 import com.example.attendease.core.data.entity.ClassInfo
 import com.example.attendease.core.data.entity.Student
 //import com.example.attendease.core.data.entity.StudentAttendance
@@ -108,7 +109,7 @@ class AttendiesViewModel(val attendiesRepository: AttendiesRepository) : ViewMod
         }
     }
 
-    fun initializeTestData() {
+    fun initializeTestClassesData() {
         viewModelScope.launch {
             val classes = listOf(
                 ClassInfo(
@@ -223,6 +224,50 @@ class AttendiesViewModel(val attendiesRepository: AttendiesRepository) : ViewMod
                     }
                 }
             } catch (e: Exception) {
+                _error.value = e.message ?: "An unknown error occurred"
+            } finally {
+                _isLoading.value = false
+            }
+        }
+    }
+
+    fun initializeTestAttendancesData() {
+        viewModelScope.launch {
+            val attendanceData = listOf(
+                // Class 1 (Math Class - A1) - Matches original Class 65
+                Attendance(classInfoId = 1, studentId = 5, attendanceType = "Absence"),  // Sofiane Dali (265 → 5)
+                Attendance(classInfoId = 1, studentId = 6, attendanceType = "Absence"),  // Linda Cherif (266 → 6)
+                Attendance(classInfoId = 1, studentId = 7, attendanceType = "Absence"),  // Hichem Bouzid (267 → 7)
+                Attendance(classInfoId = 1, studentId = 9, attendanceType = "Absence"),  // Mourad Guettache (269 → 9)
+
+                // Class 2 (Physics Class - B2) - Matches original Class 66
+                Attendance(classInfoId = 2, studentId = 10, attendanceType = "Absence"), // Selim Boualem (260 → 10)
+                Attendance(classInfoId = 2, studentId = 11, attendanceType = "Absence"), // Meriam Messaoudi (261 → 11)
+                Attendance(classInfoId = 2, studentId = 12, attendanceType = "Absence"), // Khaled Kacem (262 → 12)
+                Attendance(classInfoId = 2, studentId = 13, attendanceType = "Absence"), // Farah Ait Ali (263 → 13)
+                Attendance(classInfoId = 2, studentId = 14, attendanceType = "Absence"), // Imad Berkani (264 → 14)
+
+                // Class 3 (Android Dev - B2) - Matches original Class 68
+                Attendance(classInfoId = 3, studentId = 10, attendanceType = "Absence"),
+                Attendance(classInfoId = 3, studentId = 11, attendanceType = "Absence"),
+                Attendance(classInfoId = 3, studentId = 12, attendanceType = "Absence"),
+                Attendance(classInfoId = 3, studentId = 13, attendanceType = "Absence"),
+                Attendance(classInfoId = 3, studentId = 14, attendanceType = "Absence"),
+
+                // Class 4 (English Class - G2) - Matches original Class 69
+                Attendance(classInfoId = 4, studentId = 2, attendanceType = "Absence"),  // Sara Bouzid (256 → 2)
+                Attendance(classInfoId = 4, studentId = 5, attendanceType = "Absence"),  // Omar Tighilt (259 → 5)
+                Attendance(classInfoId = 4, studentId = 17, attendanceType = "Absence"), // Nour Saadi (272 → 17)
+                Attendance(classInfoId = 4, studentId = 18, attendanceType = "Absence"), // Wal
+            )
+            try {
+                _isLoading.value = true
+                _error.value = null
+
+                attendanceData.forEach { attendanceRow ->
+                    attendiesRepository.setAttendanceRow(attendanceRow)
+                }
+            } catch (e: Exception){
                 _error.value = e.message ?: "An unknown error occurred"
             } finally {
                 _isLoading.value = false
