@@ -70,8 +70,8 @@ fun AttendiesView(
 //        attendiesViewModel.initializeTestClassesData()
 //        attendiesViewModel.initializeTestDataStudents()
 //        attendiesViewModel.initializeTestAttendancesData()
+//        attendiesViewModel.getStudentsOfAClassWithAttendances(0, AttendanceType.Presence)
         attendiesViewModel.getAllClassesInfo()
-        attendiesViewModel.getStudentsOfAClassWithAttendances(0, AttendanceType.Presence)
     }
 
     LaunchedEffect(currentState) {
@@ -90,7 +90,7 @@ fun AttendiesView(
 
     LaunchedEffect(selectedClass) {
         selectedClass?.let { safeClass ->
-            attendiesViewModel.getStudentsOfAClassWithAttendances(safeClass.sessionId, AttendanceType.Presence)
+            attendiesViewModel.getStudentsOfAClassWithAttendances(safeClass.sessionId, AttendanceType.Absence)
         }
     }
 
@@ -223,8 +223,8 @@ fun AttendiesView(
                     AttendiesStudentList(
                         studentsListOfClass.map { student ->
                             Student(
-                                fullName = student.studentName,
-                                absenceCount = 2
+                                fullName = student.student.studentName,
+                                absenceCount = student.attendanceCount
                             )
                         },
                         onStateChange = {newStep -> currentState = newStep}
