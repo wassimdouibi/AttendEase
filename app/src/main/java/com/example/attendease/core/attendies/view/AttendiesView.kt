@@ -1,15 +1,12 @@
 package com.example.attendease.core.attendies.view
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -19,6 +16,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -28,14 +26,12 @@ import com.example.attendease.core.attendies.model.entity.Session
 import com.example.attendease.core.attendies.model.entity.Student
 import com.example.attendease.core.attendies.view.components.*
 import com.example.attendease.core.attendies.viewModel.AttendiesViewModel
-import com.example.attendease.core.data.dao.ClassInfoDao
-import com.example.attendease.core.data.entity.ClassInfo
 import com.example.attendease.ui.theme.LocalCustomColorScheme
 import com.example.attendease.ui.theme.LocalCustomTypographyScheme
 import java.text.SimpleDateFormat
 import java.time.LocalTime
 import java.util.*
-
+import com.example.attendease.R
 
 @Composable
 fun AttendiesView(
@@ -113,7 +109,7 @@ fun AttendiesView(
             }
 
             Text(
-                text = "Attendance",
+                text = stringResource(R.string.attendies_title),
                 textAlign = TextAlign.Start,
                 color = LocalCustomColorScheme.current.default900,
                 style = LocalCustomTypographyScheme.current.heading1
@@ -127,8 +123,8 @@ fun AttendiesView(
         if(currentState == ProgressStep.Session) {
             DateSelectorRow(context, selectedDate) { newDate -> selectedDate = newDate }
             SectionHeader(
-                title = "Sessions",
-                subtitle = "Please select the sessions to proceed with your actions."
+                title = stringResource(R.string.attendies_sessions_title),
+                subtitle = stringResource(R.string.attendies_sessions_subtitle)
             )
 
             when {
@@ -155,7 +151,7 @@ fun AttendiesView(
                         verticalArrangement = Arrangement.Center
                     ) {
                         Text(
-                            text = "No classes available",
+                            text = stringResource(R.string.attendies_sessions_none_session),
                             modifier = Modifier.padding(16.dp)
                         )
                     }
@@ -186,8 +182,8 @@ fun AttendiesView(
                 onStateChange = {newValue -> markedBy = newValue}
             )
             SectionHeader(
-                title = "Student List",
-                subtitle = "Please select the students to proceed with your actions."
+                title = stringResource(R.string.attendies_student_title),
+                subtitle = stringResource(R.string.attendies_student_subtitle)
             )
 
             when {
@@ -214,7 +210,7 @@ fun AttendiesView(
                         verticalArrangement = Arrangement.Center
                     ) {
                         Text(
-                            text = "No students available for this class",
+                            text = stringResource(R.string.attendies_student_none_student),
                             modifier = Modifier.padding(16.dp)
                         )
                     }

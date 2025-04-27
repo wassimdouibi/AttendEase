@@ -1,7 +1,6 @@
 package com.example.attendease.onboarding.view
 
 import android.content.SharedPreferences
-import android.provider.SyncStateContract.Constants
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.attendease.R
@@ -71,9 +71,9 @@ fun Login(
             }
 
             Spacer(modifier = Modifier.height(40.dp))
-            BlueTitleTexte("Welcome Back")
+            BlueTitleTexte(stringResource(R.string.login_screen_title))
             Spacer(modifier = Modifier.height(13.dp))
-            GreyTexte("Log in to your AttendEase account")
+            GreyTexte(stringResource(R.string.login_screen_subtitle))
             if (errorMessage.value.isNotEmpty()) {
                 Text(
                     text = errorMessage.value,
@@ -83,14 +83,14 @@ fun Login(
             }
             Spacer(modifier = Modifier.height(50.dp))
 
-            MyTextField("Email", value = email.value, onValueChange = { email.value = it })
-            passwordTextField("Password", value = password.value, onValueChange = { password.value = it })
+            MyTextField(stringResource(R.string.login_screen_email_input), value = email.value, onValueChange = { email.value = it })
+            passwordTextField(stringResource(R.string.login_screen_password_input), value = password.value, onValueChange = { password.value = it })
             Spacer(modifier = Modifier.height(4.dp))
 
 
             Spacer(modifier = Modifier.height(50.dp))
 
-            BlackButton("Login", navController, Router.AttendEaseNavScreen.route, {pref.edit().putBoolean("IS_USER_LOGGED_IN", true).apply()})
+            BlackButton(stringResource(R.string.login_screen_cta), navController, Router.AttendEaseNavScreen.route, {pref.edit().putBoolean("IS_USER_LOGGED_IN", true).apply()})
 
             Spacer(modifier = Modifier.weight(1f))
             Spacer(modifier = Modifier.height(15.dp))

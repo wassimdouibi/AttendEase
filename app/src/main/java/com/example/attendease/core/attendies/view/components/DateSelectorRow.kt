@@ -1,7 +1,5 @@
 package com.example.attendease.core.attendies.view.components
 
-
-
 import android.app.DatePickerDialog
 import android.content.Context
 import androidx.compose.foundation.clickable
@@ -12,10 +10,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import java.text.SimpleDateFormat
 import java.util.*
+import com.example.attendease.R
 
 @Composable
 fun DateSelectorRow(context: Context, selectedDate: String, onDateChange: (String) -> Unit) {
@@ -44,7 +44,7 @@ fun DateSelectorRow(context: Context, selectedDate: String, onDateChange: (Strin
         )
 
         Text(
-            text = "Change",
+            text = stringResource(R.string.attendies_calendar_change_cta),
             color = MaterialTheme.colorScheme.primary,
             modifier = Modifier.clickable {
                 showDatePicker(context, onDateChange, dateFormat)

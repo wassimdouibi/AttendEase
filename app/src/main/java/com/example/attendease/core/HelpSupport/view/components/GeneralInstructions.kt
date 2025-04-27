@@ -10,20 +10,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.attendease.ui.theme.LocalCustomColorScheme
 import com.example.attendease.ui.theme.LocalCustomTypographyScheme
+import com.example.attendease.R
 
 @Composable
 fun GeneralInstructions() {
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        InstructionItem("Do", true)
-        InstructionItem("Do", true)
-        InstructionItem("Do", true)
-        InstructionItem("Don't do", false)
-        InstructionItem("Don’t do", false)
+        InstructionItem(stringResource(R.string.general_instructions_do), true)
+        InstructionItem(stringResource(R.string.general_instructions_do), true)
+        InstructionItem(stringResource(R.string.general_instructions_do), true)
+        InstructionItem(stringResource(R.string.general_instructions_dont), false)
+        InstructionItem(stringResource(R.string.general_instructions_dont), false)
     }
 }
 

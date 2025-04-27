@@ -5,9 +5,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.attendease.core.attendies.model.entity.SessionType
 import com.example.attendease.core.attendies.model.entity.TimeOfDay
+import com.example.attendease.R
 
 @Composable
 fun FilterPopup(
@@ -20,20 +22,20 @@ fun FilterPopup(
     AlertDialog(
         onDismissRequest = onDismiss,
         confirmButton = {
-            Button(onClick = onDismiss) { Text("Apply Filters") }
+            Button(onClick = onDismiss) { Text(stringResource(R.string.attendies_calendar_applyFilters_cta)) }
         },
         dismissButton = {
             TextButton(onClick = {
                 onTypeSelected(null)
                 onTimeSelected(null)
                 onDismiss()
-            }) { Text("Reset") }
+            }) { Text(stringResource(R.string.attendies_calendar_reset_cta)) }
         },
-        title = { Text("Filter Sessions") },
+        title = { Text(stringResource(R.string.attendies_calendar_title_filterSessions)) },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
                 // Session Type Filter
-                Text("Session Type")
+                Text(stringResource(R.string.attendies_calendar_title_sessionType))
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     SessionType.entries.forEach { type ->
                         FilterChip(
@@ -45,7 +47,7 @@ fun FilterPopup(
                 }
 
                 // Time of Day Filter
-                Text("Time of Day")
+                Text(stringResource(R.string.attendies_calendar_title_timeOfDay))
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     TimeOfDay.entries.forEach { time ->
                         FilterChip(

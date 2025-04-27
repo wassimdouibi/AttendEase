@@ -10,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -21,9 +22,9 @@ import kotlinx.coroutines.delay
 fun LoadingScreen(onLoadingComplete: () -> Unit) {
     var progress by remember { mutableStateOf(0f) }
     val statusText = when {
-        progress < 0.3f -> "Setting things up for you! 📑"
-        progress < 0.7f -> "Almost there! ⏳"
-        else -> "Done! ✔"
+        progress < 0.3f -> stringResource(R.string.loading_screen_msg3)
+        progress < 0.7f -> stringResource(R.string.loading_screen_msg4)
+        else -> stringResource(R.string.loading_screen_msg5)
     }
 
     LaunchedEffect(Unit) {
@@ -41,14 +42,14 @@ fun LoadingScreen(onLoadingComplete: () -> Unit) {
         verticalArrangement = Arrangement.Center
     ) {
         Image(
-            painter = painterResource(id = R.drawable.logo_nav),// au lieu de la photo de loding!!!
+            painter = painterResource(id = R.drawable.logo_nav),
             contentDescription = "Loading",
             modifier = Modifier.size(120.dp)
         )
         Spacer(modifier = Modifier.height(20.dp))
 
         Text(
-            text = "Getting Everything Ready for You...",
+            text = stringResource(R.string.loading_screen_msg1),
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
             color = Color(0xFF007BFF)
@@ -56,7 +57,7 @@ fun LoadingScreen(onLoadingComplete: () -> Unit) {
         Spacer(modifier = Modifier.height(8.dp))
 
         Text(
-            text = "We're preparing your attendance data",
+            text = stringResource(R.string.loading_screen_msg2),
             fontSize = 14.sp,
             color = Color.Gray
         )

@@ -1,4 +1,88 @@
 <resources>
+    <!-- App basics -->
     <string name="app_name">AttendEase</string>
+    <string name="welcome_message">Welcome to AttendEase!</string>
 
+    <!--    Get started Page     -->
+    <string name="get_started_slogan">"Where Attendance Made Simple!"</string>
+    <string name="get_started_cta">Get Started</string>
+
+    <!--    Loading Screen    -->
+    <string name="loading_screen_msg1">Getting Everything Ready for You…</string>
+    <string name="loading_screen_msg2">We\'re preparing your attendance data</string>
+    <string name="loading_screen_msg3">Setting things up for you! 📑</string>
+    <string name="loading_screen_msg4">Almost there! ⏳</string>
+    <string name="loading_screen_msg5">Done! ✔</string>
+
+    <!--    Login Screen    -->
+    <string name="login_screen_title">Welcome Back</string>
+    <string name="login_screen_subtitle">Log in to your AttendEase account</string>
+    <string name="login_screen_email_input">Email</string>
+    <string name="login_screen_password_input">Password</string>
+    <string name="login_screen_cta">Login</string>
+    
+    <!--    OnBoarding Screen   -->
+    <string name="onboarding_title1">Pas d\'internet ? pas de problème!</string>
+    <string name="onboarding_subtitle1">AttendEase vous permet de gérer les présences même sans connexion. Idéal pour ceux qui ont du mal à trouver une connexion internet stable.</string>
+
+    <string name="onboarding_title2">Marquage flexible de la présence</string>
+    <string name="onboarding_subtitle2">Suivez facilement les présences grâce à une gestion flexible des présences et des absences. Vous avez le contrôle !</string>
+
+    <string name="onboarding_title3">Présence, gérée pour vous !</string>
+    <string name="onboarding_subtitle3">Gag nez du temps grâce à la saisie automatisée des présences. Laissez AttendEase s\'en charger pour vous !</string>
+
+    <string name="onboarding_next_cta">Next</string>
+    <string name="onboarding_connexion">Connexion</string>
+
+    <!--    Help & Support    -->
+    <string name="help_support_contact_email">Email</string>
+    <string name="help_support_contact_phone">Phone</string>
+    <string name="help_support_contact_office">Office hours</string>
+    <string name="help_support_title">Help &amp; Support</string>
+    <string name="help_support_subtitle1">General Instructions</string>
+    <string name="help_support_subtitle2">Frequently Asked Questions</string>
+    <string name="help_support_subtitle3">Contact Support</string>
+
+    <string name="faq_q1">How to use the app?</string>
+    <string name="faq_q2">How to reset my password?</string>
+    <string name="faq_q3">How to report an issue?</string>
+    <string name="faq_a1">You can use the app by following these steps…</string>
+    <string name="faq_a2">To reset your password, go to the settings…</string>
+    <string name="faq_a3">If you encounter an issue, please contact support…</string>
+
+    <string name="general_instructions_do">Do</string>
+    <string name="general_instructions_dont">Don\'t do</string>
+
+    <string name="navitem_1">Attendance</string>
+    <string name="navitem_2">Statistics</string>
+    <string name="navitem_3">Help &amp; Support</string>
+    <string name="navitem_4">Logout</string>
+
+    <string name="statistics_title">Statistics</string>
+    <string name="statistics_subtitle">Average attendance rate per group</string>
+    <string name="statistics_filter_today">Today</string>
+    <string name="statistics_filter_weekly">Weekly</string>
+    <string name="statistics_filter_monthly">Monthy</string>
+    <string name="statistics_overall_stats">Overall absenteeism rate is 7%</string>
+    <string name="statistics_overall_most_absentee">Overall absenteeism rate is 7%</string>
+    <string name="statistics_overall_total_number_absentees">Registered absences</string>
+
+    <!--    Attendies Pages     -->
+    <string name="attendies_types">Attendance Type</string>
+    <string name="attendies_search_for_student">Search for a student by name</string>
+    <string name="attendies_confirm_cta">Confirm</string>
+    <string name="attendies_search_for_session">Search for your session</string>
+    <string name="attendies_calendar_change_cta">Change</string>
+    <string name="attendies_calendar_applyFilters_cta">Apply Filters</string>
+    <string name="attendies_calendar_reset_cta">Reset</string>
+    <string name="attendies_calendar_title_filterSessions">Filter Sessions</string>
+    <string name="attendies_calendar_title_sessionType">Session Type</string>
+    <string name="attendies_calendar_title_timeOfDay">Time of Day</string>
+    <string name="attendies_title">Attendance</string>
+    <string name="attendies_sessions_title">Attendance</string>
+    <string name="attendies_sessions_subtitle">Please select the sessions to proceed with your actions.</string>
+    <string name="attendies_sessions_none_session">No classes available</string>
+    <string name="attendies_student_title">Student List</string>
+    <string name="attendies_student_subtitle">Please select the students to proceed with your actions.</string>
+    <string name="attendies_student_none_student">No student is available for this class</string>
 </resources>

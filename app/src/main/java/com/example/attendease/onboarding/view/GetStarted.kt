@@ -1,23 +1,20 @@
 package com.example.attendease.onboarding.view
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.attendease.R
@@ -51,13 +48,13 @@ fun GetStarted (navController: NavController,modifier: Modifier = Modifier ) {
                 modifier = Modifier.width(360.dp)
             )
             Spacer(modifier = Modifier.height(24.dp))
-            BlackTextCenter("Where Attendance Made Simple!")
+            BlackTextCenter(stringResource(R.string.get_started_slogan))
         }
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            BlackButton("Get Started", navController, Router.OnBoardingScreen.route)
+            BlackButton(stringResource(R.string.get_started_cta), navController, Router.OnBoardingScreen.route)
             Spacer(modifier = Modifier.height(16.dp))
             HaveAccount(navController)
         }

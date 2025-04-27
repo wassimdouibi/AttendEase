@@ -14,16 +14,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.attendease.ui.theme.LocalCustomColorScheme
 import com.example.attendease.ui.theme.LocalCustomTypographyScheme
+import com.example.attendease.R
+
 
 @Composable
 fun FAQSection() {
     val faqs = listOf(
-        "How to use the app?" to "You can use the app by following these steps...",
-        "How to reset my password?" to "To reset your password, go to the settings...",
-        "How to report an issue?" to "If you encounter an issue, please contact support..."
+        stringResource(R.string.faq_q1) to stringResource(R.string.faq_a1),
+        stringResource(R.string.faq_q2) to stringResource(R.string.faq_a2),
+        stringResource(R.string.faq_q3) to stringResource(R.string.faq_a3)
     )
 
     Column {

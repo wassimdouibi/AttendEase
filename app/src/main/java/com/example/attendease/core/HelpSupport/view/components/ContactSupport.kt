@@ -10,17 +10,18 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.attendease.ui.theme.LocalCustomColorScheme
 import com.example.attendease.ui.theme.LocalCustomTypographyScheme
+import com.example.attendease.R
 
 @Composable
 fun ContactSupport() {
     Column {
-        ContactItem(Icons.Outlined.Email, "Email", "support_attendease@esi.dz")
-        ContactItem(Icons.Outlined.Phone, "Phone", "+213 540 80 46 94")
-        ContactItem(Icons.Outlined.AccessTime, "Office hours", "09:00 - 16:00")
+        ContactItem(Icons.Outlined.Email, stringResource(R.string.help_support_contact_phone), "support_attendease@esi.dz")
+        ContactItem(Icons.Outlined.Phone, stringResource(R.string.help_support_contact_phone), "+213 540 80 46 94")
+        ContactItem(Icons.Outlined.AccessTime, stringResource(R.string.help_support_contact_office), "09:00 - 16:00")
     }
 }
 

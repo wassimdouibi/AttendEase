@@ -34,6 +34,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -113,9 +114,9 @@ fun SlideContent(page: Int) {
                     )
 
                     Spacer(modifier = Modifier.height(80.dp))
-                    BlueTitleTexteCenter("Pas d'internet ? pas de problème!")
+                    BlueTitleTexteCenter(stringResource(R.string.onboarding_title1))
                     Spacer(modifier = Modifier.height(40.dp))
-                    NormaleGreyTexte("AttendEase vous permet de gérer les présences même sans connexion. Idéal pour ceux qui ont du mal à trouver une connexion internet stable.")
+                    NormaleGreyTexte(stringResource(R.string.onboarding_subtitle1))
 
                 }
 
@@ -135,9 +136,9 @@ fun SlideContent(page: Int) {
                     )
 
                     Spacer(modifier = Modifier.height(80.dp))
-                    BlueTitleTexteCenter("Marquage flexible de la présence")
+                    BlueTitleTexteCenter(stringResource(R.string.onboarding_title2))
                     Spacer(modifier = Modifier.height(40.dp))
-                    NormaleGreyTexte("Suivez facilement les présences grâce à une gestion flexible des présences et des absences. Vous avez le contrôle !")
+                    NormaleGreyTexte(stringResource(R.string.onboarding_subtitle3))
                 }
 
             }
@@ -156,9 +157,9 @@ fun SlideContent(page: Int) {
                     )
 
                     Spacer(modifier = Modifier.height(42.dp))
-                    BlueTitleTexteCenter("Présence, gérée pour vous !")
+                    BlueTitleTexteCenter(stringResource(R.string.onboarding_title3))
                     Spacer(modifier = Modifier.height(40.dp))
-                    NormaleGreyTexte("Gagnez du temps grâce à la saisie automatisée des présences. Laissez AttendEase s'en charger pour vous !")
+                    NormaleGreyTexte(stringResource(R.string.onboarding_subtitle3))
 
                     Spacer(modifier = Modifier.height(15.dp))
                 }
@@ -258,7 +259,7 @@ fun NavigationButtons(pagerState: PagerState, navController: NavController, pref
             shape = RoundedCornerShape(100.dp)
         ) {
             Text(
-                text = if (pagerState.currentPage < pagerState.pageCount - 1) "Next" else "Connexion",
+                text = if (pagerState.currentPage < pagerState.pageCount - 1) stringResource(R.string.onboarding_next_cta) else stringResource(R.string.onboarding_connexion),
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.White

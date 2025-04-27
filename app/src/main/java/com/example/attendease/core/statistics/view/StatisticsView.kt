@@ -9,12 +9,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.attendease.core.statistics.viewModel.StatisticsViewModel
 import com.example.attendease.ui.theme.LocalCustomColorScheme
 import com.example.attendease.ui.theme.LocalCustomTypographyScheme
+import com.example.attendease.R
 
 
 @Composable
@@ -40,7 +42,7 @@ fun StatisticsView(
     ) {
 
         Text(
-            text = "Statistics",
+            text = stringResource(R.string.statistics_title),
             textAlign = TextAlign.Start,
             color = LocalCustomColorScheme.current.default900,
             style = LocalCustomTypographyScheme.current.heading1
@@ -49,7 +51,7 @@ fun StatisticsView(
         Column {
 
             Text(
-                text = "Average attendance rate per group",
+                text = stringResource(R.string.statistics_subtitle),
                 style = LocalCustomTypographyScheme.current.p_large,
                 color = LocalCustomColorScheme.current.default600
             )

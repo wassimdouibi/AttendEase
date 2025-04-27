@@ -10,11 +10,13 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.attendease.core.attendies.model.entity.ProgressStep
 import com.example.attendease.core.attendies.model.entity.Student
 import com.example.attendease.ui.theme.LocalCustomColorScheme
 import com.example.attendease.ui.theme.LocalCustomTypographyScheme
+import com.example.attendease.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -37,7 +39,7 @@ fun AttendiesStudentList(
             onValueChange = { searchQuery = it },
             placeholder = {
                 Text(
-                    text = "Search for a student by name",
+                    text = stringResource(R.string.attendies_search_for_student),
                     style = LocalCustomTypographyScheme.current.p_small,
                     color = LocalCustomColorScheme.current.default500,
                 )
@@ -85,7 +87,7 @@ fun AttendiesStudentList(
                     )
                 ) {
                     Text(
-                        text = "Confirm",
+                        text = stringResource(R.string.attendies_confirm_cta),
                         style = LocalCustomTypographyScheme.current.p_mediumSemiBold
                     )
                 }

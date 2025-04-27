@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -13,6 +14,8 @@ import com.example.attendease.core.HelpSupport.view.components.GeneralInstructio
 import com.example.attendease.core.HelpSupport.viewModel.HelpSupportViewModel
 import com.example.attendease.ui.theme.LocalCustomColorScheme
 import com.example.attendease.ui.theme.LocalCustomTypographyScheme
+import com.example.attendease.R
+
 
 @Composable
 fun HelpSupportView(
@@ -25,7 +28,7 @@ fun HelpSupportView(
     ) {
         // Header
         Text(
-            text = "Help & Support",
+            text = stringResource(R.string.help_support_title),
             textAlign = TextAlign.Start,
             color = LocalCustomColorScheme.current.default900,
             style = LocalCustomTypographyScheme.current.heading1
@@ -37,7 +40,7 @@ fun HelpSupportView(
         ) {
             // General Instructions
             Text(
-                text = "General Instructions",
+                text = stringResource(R.string.help_support_subtitle1),
                 style = LocalCustomTypographyScheme.current.p_large,
                 color = LocalCustomColorScheme.current.default600
             )
@@ -48,7 +51,7 @@ fun HelpSupportView(
 
             // FAQ Section
             Text(
-                text = "Frequently Asked Questions",
+                text = stringResource(R.string.help_support_subtitle2),
                 style = LocalCustomTypographyScheme.current.p_large,
                 color = LocalCustomColorScheme.current.default600
             )
@@ -58,7 +61,7 @@ fun HelpSupportView(
 
             // Contact Support
             Text(
-                text = "Contact Support",
+                text = stringResource(R.string.help_support_subtitle3),
                 style = LocalCustomTypographyScheme.current.p_large,
                 color = LocalCustomColorScheme.current.default600
             )

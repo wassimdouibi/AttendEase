@@ -1,6 +1,5 @@
 package com.example.attendease.core.attendies.view.components
 
-
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -11,14 +10,14 @@ import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.attendease.core.attendies.model.entity.ProgressStep
 import com.example.attendease.core.attendies.model.entity.Session
 import com.example.attendease.core.attendies.model.entity.SessionType
 import com.example.attendease.core.attendies.model.entity.TimeOfDay
 import com.example.attendease.ui.theme.LocalCustomColorScheme
-import com.example.attendease.ui.theme.LocalCustomTypographyScheme
+import com.example.attendease.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -52,7 +51,7 @@ fun ClassesList(
             OutlinedTextField(
                 value = searchQuery,
                 onValueChange = { searchQuery = it },
-                placeholder = { Text(text = "Search for your session") },
+                placeholder = { Text(text = stringResource(R.string.attendies_search_for_session)) },
                 leadingIcon = { Icon(Icons.Outlined.Search, contentDescription = "Search", tint = LocalCustomColorScheme.current.default900) },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(),

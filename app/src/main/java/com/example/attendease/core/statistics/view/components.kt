@@ -10,8 +10,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.clickable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import com.example.attendease.ui.theme.LocalCustomColorScheme
 import com.example.attendease.ui.theme.LocalCustomTypographyScheme
+import com.example.attendease.R
 
 enum class FilterType {
     TODAY, WEEKLY, MONTHLY
@@ -73,21 +75,21 @@ fun FilterSegmentControl(
             .background(Color.Transparent)
     ) {
         FilterSegmentButton(
-            text = "Today",
+            text = stringResource(R.string.statistics_filter_today),
             isSelected = selectedFilter == FilterType.TODAY,
             onClick = { onFilterSelected(FilterType.TODAY) },
             selectedColor = Color(0xFF006FEE),
             unselectedColor = Color(0xFF006FEE)
         )
         FilterSegmentButton(
-            text = "Weekly",
+            text = stringResource(R.string.statistics_filter_weekly),
             isSelected = selectedFilter == FilterType.WEEKLY,
             onClick = { onFilterSelected(FilterType.WEEKLY) },
             selectedColor = Color(0xFF006FEE),
             unselectedColor = Color(0xFF006FEE)
         )
         FilterSegmentButton(
-            text = "Monthly",
+            text = stringResource(R.string.statistics_filter_monthly),
             isSelected = selectedFilter == FilterType.MONTHLY,
             onClick = { onFilterSelected(FilterType.MONTHLY) },
             selectedColor = Color(0xFF006FEE),
@@ -106,7 +108,7 @@ fun FilterSegmentButton(
 ) {
     Box(
         modifier = Modifier
-            .width(if (text == "Weekly") 116.dp else 118.dp)
+            .width(if (text == stringResource(R.string.statistics_filter_weekly)) 116.dp else 118.dp)
             .height(36.dp)
             .background(
                 color = if (isSelected) selectedColor else Color.Transparent,
@@ -142,7 +144,7 @@ fun StatisticCards() {
                 .padding(12.dp)
         ) {
             Text(
-                text = "Overall absenteeism rate is 7%",
+                text = stringResource(R.string.statistics_overall_stats),
                 style = LocalCustomTypographyScheme.current.heading3,
                 color = LocalCustomColorScheme.current.default900,
                 modifier = Modifier
@@ -155,14 +157,14 @@ fun StatisticCards() {
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             StatisticCard(
-                title = "Most absentee group",
+                title = stringResource(R.string.statistics_overall_most_absentee),
                 value = "2CSSIT1",
                 backgroundColor = Color(0xFFF31260),
                 modifier = Modifier.weight(1f)
             )
 
             StatisticCard(
-                title = "Registered absences",
+                title = stringResource(R.string.statistics_overall_total_number_absentees),
                 value = "50",
                 backgroundColor = Color(0xFF006FEE),
                 modifier = Modifier.weight(1f)
