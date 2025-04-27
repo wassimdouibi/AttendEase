@@ -1,17 +1,14 @@
 package com.example.attendease.core.attendies.viewModel
 
 import android.util.Log
-import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import androidx.room.Room
 import com.example.attendease.core.attendies.model.entity.AttendanceType
 import com.example.attendease.core.attendies.model.respository.AttendiesRepository
-import com.example.attendease.core.data.AppDataBase
 import com.example.attendease.core.data.entity.ClassInfo
 import com.example.attendease.core.data.entity.Student
-import com.example.attendease.core.data.entity.StudentAttendance
+//import com.example.attendease.core.data.entity.StudentAttendance
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -25,8 +22,8 @@ class AttendiesViewModel(val attendiesRepository: AttendiesRepository) : ViewMod
     private val _classesInfo = MutableStateFlow<List<ClassInfo>>(emptyList())
     val classesInfo: StateFlow<List<ClassInfo>> = _classesInfo.asStateFlow()
 
-    private val _studentsOfAClassWithAttendances = MutableStateFlow<List<StudentAttendance>>(emptyList())
-    val studentsOfAClassWithAttendances: StateFlow<List<StudentAttendance>> = _studentsOfAClassWithAttendances.asStateFlow()
+    private val _studentsOfAClassWithAttendances = MutableStateFlow<List<Student>>(emptyList())
+    val studentsOfAClassWithAttendances: StateFlow<List<Student>> = _studentsOfAClassWithAttendances.asStateFlow()
 
     private val _isLoading = MutableStateFlow(false)
     val isLoading = _isLoading.asStateFlow()
@@ -50,7 +47,7 @@ class AttendiesViewModel(val attendiesRepository: AttendiesRepository) : ViewMod
     }
 
     fun getStudentsOfAClassWithAttendances(
-        classinfoId: Long,
+        classInfoId: Long,
         attendanceType: AttendanceType = AttendanceType.Presence
     ) {
         viewModelScope.launch {
@@ -58,10 +55,11 @@ class AttendiesViewModel(val attendiesRepository: AttendiesRepository) : ViewMod
                 _isLoading.value = true
                 _error.value = null
 
-                val response = attendiesRepository.getStudentsOfAClassWithAttendances(classinfoId, attendanceType)
+                val response = attendiesRepository.getStudentsOfAClassWithAttendances(classInfoId, attendanceType).first()
                 _studentsOfAClassWithAttendances.value = response
-            } catch (e:Exception) {
-                _error.value = e.message ?: "An unknown error occurred in the getStudentsOfAClassWithAttendances function"
+                Log.d("Get Students", response.toString())
+            } catch (e: Exception) {
+                _error.value = e.message ?: "An unknown error occurred"
             } finally {
                 _isLoading.value = false
             }
@@ -74,6 +72,20 @@ class AttendiesViewModel(val attendiesRepository: AttendiesRepository) : ViewMod
                 _isLoading.value = true
                 _error.value = null
                 attendiesRepository.deleteAllClassInfo()
+            } catch (e: Exception) {
+                _error.value = e.message ?: "An unknown error occurred"
+            } finally {
+                _isLoading.value = false
+            }
+        }
+    }
+
+    fun deleteAllStudents() {
+        viewModelScope.launch {
+            try {
+                _isLoading.value = true
+                _error.value = null
+                attendiesRepository.deleteAllStudents()
             } catch (e: Exception) {
                 _error.value = e.message ?: "An unknown error occurred"
             } finally {
@@ -169,39 +181,39 @@ class AttendiesViewModel(val attendiesRepository: AttendiesRepository) : ViewMod
         viewModelScope.launch {
             val students = listOf(
                 // Group A1
-                Student(studentName = "Wassim Douibi", section = "A", groupe = "1"),
-                Student(studentName = "Sara Bouzid", section = "A", groupe = "1"),
-                Student(studentName = "Nassim Bendib", section = "A", groupe = "1"),
-                Student(studentName = "Yasmine Lounis", section = "A", groupe = "1"),
-                Student(studentName = "Omar Tighilt", section = "A", groupe = "1"),
+                Student(studentName = "Wassim Douibi", section = "A", groupe = "G1"),
+                Student(studentName = "Sara Bouzid", section = "A", groupe = "G2"),
+                Student(studentName = "Nassim Bendib", section = "A", groupe = "G1"),
+                Student(studentName = "Yasmine Lounis", section = "A", groupe = "G1"),
+                Student(studentName = "Omar Tighilt", section = "A", groupe = "G2"),
 
                 // Group B2
-                Student(studentName = "Selim Boualem", section = "B", groupe = "2"),
-                Student(studentName = "Meriam Messaoudi", section = "B", groupe = "2"),
-                Student(studentName = "Khaled Kacem", section = "B", groupe = "2"),
-                Student(studentName = "Farah Ait Ali", section = "B", groupe = "2"),
-                Student(studentName = "Imad Berkani", section = "B", groupe = "2"),
+                Student(studentName = "Selim Boualem", section = "B", groupe = "B2"),
+                Student(studentName = "Meriam Messaoudi", section = "B", groupe = "B2"),
+                Student(studentName = "Khaled Kacem", section = "B", groupe = "B2"),
+                Student(studentName = "Farah Ait Ali", section = "B", groupe = "B2"),
+                Student(studentName = "Imad Berkani", section = "B", groupe = "B2"),
 
                 // Group C3
-                Student(studentName = "Sofiane Dali", section = "C", groupe = "3"),
-                Student(studentName = "Linda Cherif", section = "C", groupe = "3"),
-                Student(studentName = "Hichem Bouzid", section = "C", groupe = "3"),
-                Student(studentName = "Salima Benzid", section = "C", groupe = "3"),
-                Student(studentName = "Mourad Guettache", section = "C", groupe = "3"),
+                Student(studentName = "Sofiane Dali", section = "C", groupe = "A1"),
+                Student(studentName = "Linda Cherif", section = "C", groupe = "A1"),
+                Student(studentName = "Hichem Bouzid", section = "C", groupe = "A1"),
+                Student(studentName = "Salima Benzid", section = "C", groupe = "A1"),
+                Student(studentName = "Mourad Guettache", section = "C", groupe = "A1"),
 
                 // Group G2
-                Student(studentName = "Amel Boudiaf", section = "G", groupe = "2"),
-                Student(studentName = "Karim Hassaine", section = "G", groupe = "2"),
-                Student(studentName = "Nour Saadi", section = "G", groupe = "2"),
-                Student(studentName = "Walid Mansouri", section = "G", groupe = "2"),
-                Student(studentName = "Sabrina Yahiaoui", section = "G", groupe = "2"),
+                Student(studentName = "Amel Boudiaf", section = "G", groupe = "G2"),
+                Student(studentName = "Karim Hassaine", section = "G", groupe = "G2"),
+                Student(studentName = "Nour Saadi", section = "G", groupe = "G2"),
+                Student(studentName = "Walid Mansouri", section = "G", groupe = "G2"),
+                Student(studentName = "Sabrina Yahiaoui", section = "G", groupe = "G2"),
 
                 // Group G1
-                Student(studentName = "Rania Belkacem", section = "G", groupe = "1"),
-                Student(studentName = "Reda Khodja", section = "G", groupe = "1"),
-                Student(studentName = "Sami Chettibi", section = "G", groupe = "1"),
-                Student(studentName = "Nesrine Megherbi", section = "G", groupe = "1"),
-                Student(studentName = "Yacine Amrani", section = "G", groupe = "1")
+                Student(studentName = "Rania Belkacem", section = "G", groupe = "G1"),
+                Student(studentName = "Reda Khodja", section = "G", groupe = "G1"),
+                Student(studentName = "Sami Chettibi", section = "G", groupe = "G1"),
+                Student(studentName = "Nesrine Megherbi", section = "G", groupe = "G1"),
+                Student(studentName = "Yacine Amrani", section = "G", groupe = "G1")
             )
             try {
                 _isLoading.value = true

@@ -48,13 +48,15 @@ fun AttendiesView(
     var markedBy by remember { mutableStateOf(AttendanceType.Presence) }
     var showDatePicker by remember { mutableStateOf(false) }
     var showFilterPopup by remember { mutableStateOf(false) }
+
     // var selectedDate by remember { mutableStateOf(LocalDate.now()) }
     val dateFormat = SimpleDateFormat("EEEE, d MMMM yyyy", Locale.getDefault())
     var selectedDate by remember { mutableStateOf(dateFormat.format(Date())) }
 
-
     // Data Flows
     val classesInfo by attendiesViewModel.classesInfo.collectAsState()
+    val studentsListOfClass by attendiesViewModel.studentsOfAClassWithAttendances.collectAsState()
+    var selectedClass by remember { mutableStateOf<Session?>(null) }
 
 
     // State Management
@@ -63,9 +65,17 @@ fun AttendiesView(
 
 
     LaunchedEffect(Unit) {
-        attendiesViewModel.initializeTestData()
+//        attendiesViewModel.deleteAllClassInfo()
+//        attendiesViewModel.deleteAllStudents()
+//        attendiesViewModel.initializeTestData()
+//        attendiesViewModel.initializeTestDataStudents()
         attendiesViewModel.getAllClassesInfo()
-        attendiesViewModel.initializeTestDataStudents()
+    }
+
+    LaunchedEffect(selectedClass) {
+        selectedClass?.let { safeClass ->
+            attendiesViewModel.getStudentsOfAClassWithAttendances(safeClass.sessionId, AttendanceType.Presence)
+        }
     }
 
     Column(
@@ -123,15 +133,22 @@ fun AttendiesView(
                     )
                 }
                 classesInfo.isEmpty() -> {
-                    Text(
-                        text = "No classes available",
-                        modifier = Modifier.padding(16.dp)
-                    )
+                    Column(
+                        modifier = Modifier.fillMaxSize(),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        Text(
+                            text = "No classes available",
+                            modifier = Modifier.padding(16.dp)
+                        )
+                    }
                 }
                 else -> {
                     ClassesList(
                         classesInfo.map { classInfo ->
                             Session(
+                                sessionId = classInfo.classInfoId,
                                 name = classInfo.title,
                                 salle = classInfo.salle,
                                 startHour = LocalTime.parse(classInfo.timeStart),
@@ -140,6 +157,9 @@ fun AttendiesView(
                         },
                         onStateChange = { newStep ->
                             currentState = newStep
+                        },
+                        onClassSelected = { newClass ->
+                            selectedClass = newClass
                         }
                     )
                 }
@@ -153,31 +173,48 @@ fun AttendiesView(
                 title = "Student List",
                 subtitle = "Please select the students to proceed with your actions."
             )
-            AttendiesStudentList(
-                listOf(
-                    Student("Wassim Douibi", 0),
-                    Student("Derbal Rayhane", 4),
-                    Student("Brahimi Thenina", 3),
-                    Student("Boumaout Farah", 1),
-                    Student("Wassim Douibi", 0),
-                    Student("Derbal Rayhane", 4),
-                    Student("Brahimi Thenina", 3),
-                    Student("Boumaout Farah", 1),
-                    Student("Wassim Douibi", 0),
-                    Student("Derbal Rayhane", 4),
-                    Student("Brahimi Thenina", 3),
-                    Student("Boumaout Farah", 1),
-                    Student("Wassim Douibi", 0),
-                    Student("Derbal Rayhane", 4),
-                    Student("Brahimi Thenina", 3),
-                    Student("Boumaout Farah", 1),
-                    Student("Wassim Douibi", 0),
-                    Student("Derbal Rayhane", 4),
-                    Student("Brahimi Thenina", 3),
-                    Student("Boumaout Farah", 1)
-                ),
-                onStateChange = {newStep -> currentState = newStep}
-            )
+
+            when {
+                (isLoading) -> {
+                    Column(
+                        modifier = Modifier.fillMaxSize(),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        CircularProgressIndicator()
+                    }
+                }
+                error != null -> {
+                    Text(
+                        text = "Error: $error",
+                        color = MaterialTheme.colorScheme.error,
+                        modifier = Modifier.padding(16.dp)
+                    )
+                }
+                studentsListOfClass.isEmpty() -> {
+                    Column(
+                        modifier = Modifier.fillMaxSize(),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        Text(
+                            text = "No students available for this class",
+                            modifier = Modifier.padding(16.dp)
+                        )
+                    }
+                }
+                else -> {
+                    AttendiesStudentList(
+                        studentsListOfClass.map { student ->
+                            Student(
+                                fullName = student.studentName,
+                                absenceCount = 2
+                            )
+                        },
+                        onStateChange = {newStep -> currentState = newStep}
+                    )
+                }
+            }
         }
     }
 }

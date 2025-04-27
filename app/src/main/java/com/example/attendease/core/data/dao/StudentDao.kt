@@ -14,8 +14,8 @@ interface StudentDao {
     @Query("SELECT * FROM students_table WHERE studentId = :studentId")
     fun getStudentById(studentId: Long): Student
 
-    @Query("SELECT * FROM students_table WHERE groupe = :groupe AND section = :section")
-    fun getStudentsByGroup(groupe: String, section: String): Flow<List<Student>>
+    @Query("SELECT * FROM students_table WHERE groupe = :groupe")
+    fun getStudentsByGroup(groupe: String): Flow<List<Student>>
 
     @Query("SELECT * FROM students_table WHERE section = :section")
     fun getStudentsBySection(section: String): Flow<List<Student>>

@@ -3,6 +3,7 @@ package com.example.attendease.core.attendies.model.entity
 import java.time.LocalTime
 
 data class Session(
+    val sessionId: Long,
     val name: String,
     val salle: String ,
     val startHour: LocalTime,

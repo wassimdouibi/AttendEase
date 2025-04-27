@@ -17,14 +17,20 @@ import com.example.attendease.core.attendies.model.entity.Session
 @Composable
 fun ClassItem(
     classItem: Session,
-    onStateChange: (ProgressStep) -> Unit
+    onStateChange: (ProgressStep) -> Unit,
+    onClick: () -> Unit
 ) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .background(Color.White, shape = RoundedCornerShape(12.dp))
             .padding(16.dp)
-            .clickable(onClick = {onStateChange(ProgressStep.Attendance)}),
+            .clickable(
+                onClick = {
+                    onClick()
+                    onStateChange(ProgressStep.Attendance)
+                }
+            ),
         verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         Text(

@@ -23,9 +23,10 @@ class AttendEaseApplication: Application() {
     private val attendiesService: AttendiesService by lazy{ AttendiesService.getInstance() }
     val attendiesRepository: AttendiesRepository by lazy { AttendiesRepository(
             attendiesService,
-            database.getAttendanceDao(),
+//            database.getAttendanceDao(),
             database.getClassInfoDao(),
             database.getStudentDao(),
+//            database.getStudentAttendanceDao()
         )
     }
 

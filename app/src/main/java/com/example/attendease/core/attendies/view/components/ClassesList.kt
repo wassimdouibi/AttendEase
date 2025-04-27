@@ -24,7 +24,8 @@ import com.example.attendease.ui.theme.LocalCustomTypographyScheme
 @Composable
 fun ClassesList(
     sessions: List<Session>,
-    onStateChange: (ProgressStep) -> Unit
+    onStateChange: (ProgressStep) -> Unit,
+    onClassSelected: (Session) -> Unit
 ) {
     var searchQuery by remember { mutableStateOf("") }
     var showFilterPopup by remember { mutableStateOf(false) }
@@ -74,7 +75,11 @@ fun ClassesList(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             items(filteredSessions) { session ->
-                ClassItem(classItem = session, onStateChange = onStateChange)
+                ClassItem(
+                    classItem = session,
+                    onStateChange = onStateChange,
+                    onClick = { onClassSelected(session) }
+                )
             }
         }
         }

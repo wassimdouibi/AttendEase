@@ -13,6 +13,9 @@ interface ClassInfoDao {
     @Query("SELECT * FROM class_info_table")
     fun getAllClassInfo(): Flow<List<ClassInfo>>
 
+    @Query("SELECT * FROM class_info_table WHERE classInfoId = :classInfoId")
+    fun getClassInfoById(classInfoId: Long): ClassInfo
+
     @Query("SELECT * FROM class_info_table WHERE date = :date")
     fun getClassInfoByDate(date: Date): Flow<List<ClassInfo>>
 
