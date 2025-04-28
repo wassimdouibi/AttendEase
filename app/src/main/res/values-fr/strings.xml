@@ -85,4 +85,8 @@
     <string name="attendies_student_title">Liste des étudiants</string>
     <string name="attendies_student_subtitle">Veuillez sélectionner les étudiants pour poursuivre vos actions.</string>
     <string name="attendies_student_none_student">Aucun étudiant disponible pour cette classe</string>
+
+    <string name="attendies_popup_success">Succès</string>
+    <string name="attendies_popup_message">Opération enregistrée avec succès</string>
+    <string name="attendies_popup_goback">Retour</string>
 </resources>

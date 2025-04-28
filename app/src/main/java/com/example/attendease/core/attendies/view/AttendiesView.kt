@@ -4,17 +4,24 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -44,6 +51,7 @@ fun AttendiesView(
     var markedBy by remember { mutableStateOf(AttendanceType.Presence) }
     var showDatePicker by remember { mutableStateOf(false) }
     var showFilterPopup by remember { mutableStateOf(false) }
+    var showSuccessDialog by remember { mutableStateOf(false) }
 
     // var selectedDate by remember { mutableStateOf(LocalDate.now()) }
     val dateFormat = SimpleDateFormat("EEEE, d MMMM yyyy", Locale.getDefault())
@@ -53,7 +61,6 @@ fun AttendiesView(
     val classesInfo by attendiesViewModel.classesInfo.collectAsState()
     val studentsListOfClass by attendiesViewModel.studentsOfAClassWithAttendances.collectAsState()
     var selectedClass by remember { mutableStateOf<Session?>(null) }
-
 
     // State Management
     val isLoading by attendiesViewModel.isLoading.collectAsState()
@@ -176,7 +183,7 @@ fun AttendiesView(
                     )
                 }
             }
-        } else {
+        } else if (currentState == ProgressStep.Attendance) {
             AttendanceTypes(
                 selectedType = markedBy,
                 onStateChange = {newValue -> markedBy = newValue}
@@ -223,21 +230,53 @@ fun AttendiesView(
                                 absenceCount = student.attendanceCount
                             )
                         },
-                        onStateChange = {newStep -> currentState = newStep}
+                        onStateChange = { newStep ->
+                                currentState = newStep
+                                showSuccessDialog = true
+                        }
                     )
                 }
             }
+        } else {
+            AlertDialog(
+                onDismissRequest = { showSuccessDialog = false },
+                title = {
+                    Text(
+                        text = stringResource(R.string.attendies_popup_success),
+                        style = LocalCustomTypographyScheme.current.heading2,
+                        color = LocalCustomColorScheme.current.default900
+                    )
+                },
+                text = {
+                    Text(
+                        text = stringResource(R.string.attendies_popup_message),
+                        style = LocalCustomTypographyScheme.current.p_medium,
+                        color = LocalCustomColorScheme.current.default700
+                    )
+                },
+                confirmButton = {
+                    Button(
+                        onClick = {
+                            showSuccessDialog = false
+                            currentState = ProgressStep.Session
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        shape = RoundedCornerShape(8.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color.Black,
+                            contentColor = Color.White
+                        )
+                    ) {
+                        Text(
+                            text = stringResource(R.string.attendies_popup_goback),
+                            style = LocalCustomTypographyScheme.current.p_mediumSemiBold
+                        )
+                    }
+                },
+                containerColor = MaterialTheme.colorScheme.surface,
+                shape = RoundedCornerShape(16.dp)
+            )
         }
-    }
-}
-
-
-fun parseTimeString(timeString: String): LocalTime {
-    return try {
-        // Assuming format is "HH:mm"
-        val parts = timeString.split(":")
-        LocalTime.of(parts[0].toInt(), parts[1].toInt())
-    } catch (e: Exception) {
-        LocalTime.of(12, 0) // Default fallback time
     }
 }

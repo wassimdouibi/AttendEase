@@ -85,4 +85,8 @@
     <string name="attendies_student_title">Student List</string>
     <string name="attendies_student_subtitle">Please select the students to proceed with your actions.</string>
     <string name="attendies_student_none_student">No student is available for this class</string>
+
+    <string name="attendies_popup_success">Success</string>
+    <string name="attendies_popup_message">Operation saved successfully</string>
+    <string name="attendies_popup_goback">Go Back</string>
 </resources>

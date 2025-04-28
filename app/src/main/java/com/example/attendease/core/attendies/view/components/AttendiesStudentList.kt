@@ -75,7 +75,7 @@ fun AttendiesStudentList(
                 Spacer(modifier = Modifier.height(16.dp))
                 Button(
                     onClick = {
-
+                        onStateChange(ProgressStep.Finished)
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -96,3 +96,6 @@ fun AttendiesStudentList(
         }
     }
 }
+
+
+
